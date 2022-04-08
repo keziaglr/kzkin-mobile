@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">KZkin</string>
+    <string-array name="product_categories">
+        <item>Skincare</item>
+        <item>Cosmetic product</item>
+        <item>Haircare</item>
+        <item>Fragrances</item>
+    </string-array>
+</resources>

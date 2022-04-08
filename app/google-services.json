@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "109122604925",
+    "project_id": "kzkin-mobile",
+    "storage_bucket": "kzkin-mobile.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:109122604925:android:166543f1fc4f5293b1c614",
+        "android_client_info": {
+          "package_name": "edu.bluejack21_2.KZkin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "109122604925-gqvq2gsa3qp3arudsk70vsht8b9q8pl8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBcA2VTjS7ew9xymXnejkGCl0NOl8ATe9Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "109122604925-gqvq2gsa3qp3arudsk70vsht8b9q8pl8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
