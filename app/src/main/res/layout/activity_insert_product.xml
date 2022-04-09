@@ -11,7 +11,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F8EDEB"
-    tools:context=".InsertProduct">
+    tools:context=".activity.InsertProduct">
 
     <TextView
         android:id="@+id/titleInsertProductForm"

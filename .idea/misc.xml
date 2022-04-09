@@ -4,9 +4,11 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/keziaglr/BINUS/ASLAB/TPA/Mobile/Apps/kzkin-mobile/app/src/main/res/drawable/ic_home.xml" value="0.242" />
+        <entry key="..\:/keziaglr/BINUS/ASLAB/TPA/Mobile/Apps/kzkin-mobile/app/src/main/res/layout/activity_home.xml" value="0.264" />
         <entry key="..\:/keziaglr/BINUS/ASLAB/TPA/Mobile/Apps/kzkin-mobile/app/src/main/res/layout/activity_insert_product.xml" value="0.2786458333333333" />
         <entry key="..\:/keziaglr/BINUS/ASLAB/TPA/Mobile/Apps/kzkin-mobile/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/keziaglr/BINUS/ASLAB/TPA/Mobile/Apps/kzkin-mobile/app/src/main/res/layout/bottom_navigation_menu.xml" value="0.2359375" />
+        <entry key="..\:/keziaglr/BINUS/ASLAB/TPA/Mobile/Apps/kzkin-mobile/app/src/main/res/layout/card_layout.xml" value="0.536" />
         <entry key="..\:/keziaglr/BINUS/ASLAB/TPA/Mobile/Apps/kzkin-mobile/app/src/main/res/layout/dropdown_item.xml" value="0.4" />
         <entry key="..\:/keziaglr/BINUS/ASLAB/TPA/Mobile/Apps/kzkin-mobile/app/src/main/res/layout/nav_bottom_admin.xml" value="0.4" />
         <entry key="..\:/keziaglr/BINUS/ASLAB/TPA/Mobile/Apps/kzkin-mobile/app/src/main/res/menu/nav_menu.xml" value="0.2359375" />

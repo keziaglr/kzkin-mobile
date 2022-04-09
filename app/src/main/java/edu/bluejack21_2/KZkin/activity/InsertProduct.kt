@@ -1,10 +1,9 @@
-package edu.bluejack21_2.KZkin
+package edu.bluejack21_2.KZkin.activity
 
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
@@ -17,6 +16,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import edu.bluejack21_2.KZkin.R
 import edu.bluejack21_2.KZkin.model.Product
 import java.io.IOException
 import java.util.*
@@ -65,15 +65,20 @@ class InsertProduct : AppCompatActivity() {
             val productCategory = inputProductCategory.editText!!.text.toString()
             val productDescription = inputProductDescription.editText!!.text.toString()
 
-            if (productName.isEmpty() || productBrand.isEmpty() || productCategory.isEmpty() || photoProduct!!.isBlank()){
+            if (productName.isEmpty() || productBrand.isEmpty() || productCategory.isEmpty() || photoProduct!!.isEmpty()){
                 Toast.makeText(this, "All field must be filled", Toast.LENGTH_LONG).show()
             }else if (productDescription.length < 10){
                 Toast.makeText(this, "Description must more than 10 characters", Toast.LENGTH_LONG).show()
             }else{
-                val product = Product("", productName, productBrand, productCategory, productDescription, photoProduct, Timestamp.now(), Timestamp.now())
+                val product = Product("", productName, productBrand, productCategory, productDescription, photoProduct, 0, Timestamp.now(), Timestamp.now())
                 db.collection("products").add(product)
                     .addOnSuccessListener { documentReference ->
                         Log.d("hi", "DocumentSnapshot added with ID: ${documentReference.id}")
+//                        val goToNextActivity = Intent(
+//                            applicationContext,
+//                            Home::class.java
+//                        )
+//                        startActivity(goToNextActivity)
                     }
                     .addOnFailureListener { e ->
                         Log.w("hi", "Error adding document", e)
@@ -88,8 +93,6 @@ class InsertProduct : AppCompatActivity() {
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.data != null) {
             filePath = data?.data!!
             try {
-//                val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, filePath)
-//                profileUser!!.setImageBitmap(bitmap)
                 uploadFile().toString()
             } catch (e: IOException) {
                 e.printStackTrace()

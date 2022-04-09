@@ -11,6 +11,7 @@ data class Product (
     val category: String? = null,
     val description: String? = null,
     val image: String? = null,
+    val rating: Long? = null,
     @ServerTimestamp var createdAt: Timestamp? = null,
     @ServerTimestamp var updatedAt: Timestamp? = null,
 )
