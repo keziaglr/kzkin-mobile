@@ -5,13 +5,15 @@ import com.google.firebase.firestore.DocumentId
 import com.google.firebase.firestore.ServerTimestamp
 
 data class Product (
-    @DocumentId val id : String? = null,
-    val name: String? = null,
-    val brand: String? = null,
-    val category: String? = null,
-    val description: String? = null,
-    val image: String? = null,
-    val rating: Long? = null,
+    @DocumentId var id : String? = null,
+    var name: String? = null,
+    var brand: String? = null,
+    var category: String? = null,
+    var description: String? = null,
+    var image: String? = null,
+    var rating: Long? = 0,
+    var reviews: Long? = 0,
     @ServerTimestamp var createdAt: Timestamp? = null,
     @ServerTimestamp var updatedAt: Timestamp? = null,
+
 )

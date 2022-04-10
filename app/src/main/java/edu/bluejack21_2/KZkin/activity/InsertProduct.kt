@@ -55,7 +55,7 @@ class InsertProduct : AppCompatActivity() {
             val intent = Intent()
             intent.type = "image/*"
             intent.action = Intent.ACTION_GET_CONTENT
-            startActivityForResult(Intent.createChooser(intent, "SELECT PICTURE"), PICK_IMAGE_REQUEST)
+            startActivityForResult(Intent.createChooser(intent, getString(R.string.label_image)), PICK_IMAGE_REQUEST)
         }
 
         buttonSubmit.setOnClickListener {
@@ -66,14 +66,15 @@ class InsertProduct : AppCompatActivity() {
             val productDescription = inputProductDescription.editText!!.text.toString()
 
             if (productName.isEmpty() || productBrand.isEmpty() || productCategory.isEmpty() || photoProduct!!.isEmpty()){
-                Toast.makeText(this, "All field must be filled", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, getString(R.string.err_field_empty), Toast.LENGTH_LONG).show()
             }else if (productDescription.length < 10){
-                Toast.makeText(this, "Description must more than 10 characters", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, getString(R.string.err_desc), Toast.LENGTH_LONG).show()
             }else{
-                val product = Product("", productName, productBrand, productCategory, productDescription, photoProduct, 0, Timestamp.now(), Timestamp.now())
+                val product = Product("", productName, productBrand, productCategory, productDescription,
+                    photoProduct!!, 0, 0, Timestamp.now(), Timestamp.now())
                 db.collection("products").add(product)
                     .addOnSuccessListener { documentReference ->
-                        Log.d("hi", "DocumentSnapshot added with ID: ${documentReference.id}")
+                        Toast.makeText(applicationContext, getString(R.string.succ_submit), Toast.LENGTH_SHORT).show()
 //                        val goToNextActivity = Intent(
 //                            applicationContext,
 //                            Home::class.java
@@ -109,10 +110,10 @@ class InsertProduct : AppCompatActivity() {
                         photoProduct = it.toString()
                     }
 
-                    Toast.makeText(applicationContext, "Image Uploaded!!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, getString(R.string.succ_img), Toast.LENGTH_SHORT).show()
                 }
                 .addOnFailureListener {
-                    Toast.makeText(applicationContext, "Failed", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, getString(R.string.err_img), Toast.LENGTH_SHORT).show()
                 }
                 .addOnProgressListener { taskSnapShot ->
                     val progress =

@@ -1,9 +1,35 @@
 <resources>
     <string name="app_name">KZkin</string>
+<!-- Product Section-->
+    <string name="title_insert_product">Insert Product Form</string>
     <string-array name="product_categories">
         <item>Skincare</item>
-        <item>Cosmetic product</item>
+        <item>Make Up</item>
         <item>Haircare</item>
         <item>Fragrances</item>
     </string-array>
+    <string-array name="product_sort">
+        <item>Oldest - Newest Product</item>
+        <item>Newest - Oldest Product</item>
+        <item>Highest - Lowest Rating</item>
+        <item>Lowest - Highest Rating</item>
+    </string-array>
+    <string name="label_product_name">Product Name</string>
+    <string name="label_product_brand">Product Brand</string>
+    <string name="label_product_category">Product Category</string>
+    <string name="label_product_description">Product Description</string>
+    <string name="label_image">Select Image</string>
+    <string name="label_submit">Submit</string>
+    <string name="title_home">Home</string>
+    <string name="subtitle_hottest_product">Hottest Product</string>
+    <string name="subtitle_products">Products</string>
+    <string name="sort">Sort</string>
+    <string name="filter">Filter</string>
+    <string name="err_field_empty">All field must be filled</string>
+    <string name="err_desc">Description must more than 10 characters</string>
+    <string name="succ_img">Image Uploaded</string>
+    <string name="err_img">Failed Upload Image</string>
+    <string name="succ_submit">Success submit data</string>
+    <string name="ok">Ok</string>
+    <string name="cancel">Cancel</string>
 </resources>
