@@ -108,15 +108,41 @@
             app:layout_constraintStart_toStartOf="@id/buttonFilterProductsHome"
             app:layout_constraintTop_toBottomOf="@+id/titleAllProductsHome" />
 
+<!--        <com.malinskiy.superrecyclerview.SuperRecyclerView-->
+<!--            android:id="@+id/viewAllProductsHomeRV"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="0dp"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/buttonSortProductsHome"-->
+<!--            app:mainLayoutId="@layout/layout_recyclerview_verticalscroll"-->
+<!--            app:recyclerClipToPadding="false"-->
+<!--            app:recyclerPadding="16dp"-->
+<!--            app:scrollbarStyle="insideInset">-->
+
+<!--        </com.malinskiy.superrecyclerview.SuperRecyclerView>-->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/viewAllProductsHomeRV"
             android:layout_width="383dp"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/buttonSortProductsHome"
-            app:layout_constraintVertical_bias="0.008" />
+            app:layout_constraintTop_toBottomOf="@+id/buttonSortProductsHome" />
+
+        <ProgressBar
+            android:id="@+id/pg_bar_home"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/viewAllProductsHomeRV"
+            android:visibility="gone"
+            app:layout_constraintVertical_bias="0.0" />
     </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

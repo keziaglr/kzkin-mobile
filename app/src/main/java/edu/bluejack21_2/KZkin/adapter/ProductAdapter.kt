@@ -14,8 +14,8 @@ import edu.bluejack21_2.KZkin.R
 import edu.bluejack21_2.KZkin.model.Product
 
 
-class ProductAdapter(private val Context: Any, productList: ArrayList<Product>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private var productList: ArrayList<Product>? = productList
+class ProductAdapter(private val Context: Any) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    private var productList: ArrayList<Product>? = ArrayList()
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ProductViewHolder {
         return ProductViewHolder(LayoutInflater.from(viewGroup.context).inflate(R.layout.card_layout, viewGroup, false))
     }
@@ -45,6 +45,11 @@ class ProductAdapter(private val Context: Any, productList: ArrayList<Product>) 
             }
 
         }
+    }
+
+    fun submitList(pList: ArrayList<Product>){
+        productList = pList
+        notifyDataSetChanged()
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
