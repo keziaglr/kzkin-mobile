@@ -126,7 +126,13 @@ class RegisterActivity : AppCompatActivity() {
                             if (task.isSuccessful) {
                                 Toast.makeText(applicationContext, getString(R.string.succ_regis),Toast.LENGTH_SHORT).show()
                                 db.collection("users").document(auth.currentUser!!.uid).set(user, SetOptions.merge())
-                                val goToHome = Intent(applicationContext, Home::class.java)
+                                var goToHome: Intent? = null
+                                if(user!!.role == "admin"){
+                                    goToHome = Intent(this, MainActivityAdmin::class.java)
+                                }else{
+                                    goToHome = Intent(this, MainActivityUser::class.java)
+                                }
+
                                 startActivity(goToHome)
                             } else {
                                 Toast.makeText(baseContext, getString(R.string.err_regis), Toast.LENGTH_SHORT).show()

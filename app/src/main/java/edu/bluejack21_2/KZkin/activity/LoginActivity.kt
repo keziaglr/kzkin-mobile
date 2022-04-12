@@ -70,8 +70,25 @@ class LoginActivity : AppCompatActivity() {
                                 getString(R.string.succ_login),
                                 Toast.LENGTH_SHORT
                             ).show()
-                            val goToHome = Intent(applicationContext, Home::class.java)
-                            startActivity(goToHome)
+                            val docRef =  db.collection("users").document(auth.currentUser!!.uid)
+                            var user: User? = null
+                            docRef.get()
+                                .addOnSuccessListener {  document ->
+                                    if(document != null){
+                                        user = document.toObject(User::class.java)!!
+                                        Toast.makeText(applicationContext, getString(R.string.succ_login),Toast.LENGTH_SHORT).show()
+
+                                        var goToHome: Intent? = null
+                                        if(user!!.role == "admin"){
+                                            goToHome = Intent(this, MainActivityAdmin::class.java)
+                                        }else{
+                                            goToHome = Intent(this, MainActivityUser::class.java)
+                                        }
+
+                                        startActivity(goToHome)
+                                        finish()
+                                    }
+                                }
                         } else {
                             Toast.makeText(
                                 baseContext,
@@ -117,14 +134,28 @@ class LoginActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     Log.d("MainActivity", "signInWithCredential:success")
 
-                    val user = User("", auth.currentUser!!.displayName, "", auth.currentUser!!.phoneNumber, auth.currentUser!!.email, null, "", "", auth.currentUser!!.photoUrl.toString(), "user", Timestamp.now(), Timestamp.now())
-                    db.collection("users").document(auth.currentUser!!.uid).set(user, SetOptions.merge())
+                    val docRef =  db.collection("users").document(auth.currentUser!!.uid)
+                    var user: User? = null
+                    docRef.get()
+                        .addOnSuccessListener {  document ->
+                            if(document == null){
+                                user = User("", auth.currentUser!!.displayName, "", auth.currentUser!!.phoneNumber, auth.currentUser!!.email, null, "", "", auth.currentUser!!.photoUrl.toString(), "user", Timestamp.now(), Timestamp.now())
+                                db.collection("users").document(auth.currentUser!!.uid).set(user!!, SetOptions.merge())
+                            }else{
+                                user = document.toObject(User::class.java)!!
+                            }
+                            Toast.makeText(applicationContext, getString(R.string.succ_login),Toast.LENGTH_SHORT).show()
 
-                    Log.e("DATA GOOGLE", "Name ${auth.currentUser!!.displayName} Phone num ${auth.currentUser!!.phoneNumber} Email ${auth.currentUser!!.email} ${auth.currentUser!!.photoUrl.toString()}")
-                    Toast.makeText(applicationContext, getString(R.string.succ_login),Toast.LENGTH_SHORT).show()
-                    val goToHome = Intent(this, Home::class.java)
-                    startActivity(goToHome)
-                    finish()
+                            var goToHome: Intent? = null
+                            if(user!!.role == "admin"){
+                                goToHome = Intent(this, MainActivityAdmin::class.java)
+                            }else{
+                                goToHome = Intent(this, MainActivityUser::class.java)
+                            }
+
+                            startActivity(goToHome)
+                            finish()
+                        }
                 } else {
                     Log.w("MainActivity", getString(R.string.err_login), task.exception)
                 }

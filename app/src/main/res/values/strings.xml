@@ -67,4 +67,6 @@
     <string name="succ_login">Successfully login</string>
     <string name="err_login">Invalid account</string>
     <string name="err_regis">Failed register account</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
