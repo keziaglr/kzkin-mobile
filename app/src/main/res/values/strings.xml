@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">KZkin</string>
-<!-- Product Section-->
+    <!-- Product Section-->
     <string name="title_insert_product">Insert Product Form</string>
     <string-array name="product_categories">
         <item>Skincare</item>
@@ -19,6 +19,7 @@
     <string name="label_product_category">Product Category</string>
     <string name="label_product_description">Product Description</string>
     <string name="label_image">Select Image</string>
+    <string name="label_date">Select Date</string>
     <string name="label_submit">Submit</string>
     <string name="title_home">Home</string>
     <string name="subtitle_hottest_product">Hottest Product</string>
@@ -32,4 +33,38 @@
     <string name="succ_submit">Success submit data</string>
     <string name="ok">Ok</string>
     <string name="cancel">Cancel</string>
+    <!--    User Section-->
+    <string name="title_register">Register</string>
+    <string name="title_login">Login</string>
+    <string name="link_register">Doesn’t have account? Sign up</string>
+    <string name="link_login">Already have account? Sign in</string>
+    <string name="label_or">Or</string>
+    <string name="label_login_google">Login with Google</string>
+    <string name="label_name">Name</string>
+    <string name="label_password">Password</string>
+    <string name="label_phone_number">Phone Number</string>
+    <string name="label_email">Email</string>
+    <string name="label_dob">Date of Birth</string>
+    <string name="label_skin_type">Skin type</string>
+    <string name="label_gender">Gender</string>
+    <string-array name="skin_type">
+        <item>Oily Skin</item>
+        <item>Dry Skin</item>
+        <item>Normal Skin</item>
+        <item>Combination Skin</item>
+    </string-array>
+    <string-array name="gender">
+        <item>Female</item>
+        <item>Male</item>
+    </string-array>
+    <string name="err_name">Name must more than 5 characters</string>
+    <string name="err_pass">Password must more than 8 characters</string>
+    <string name="err_phone">Phone Number must more than 12 characters</string>
+    <string name="err_email_format">Email incorrect format</string>
+    <string name="err_age">Age must more than 17</string>
+    <string name="err_email_unique">Email must be unique</string>
+    <string name="succ_regis">Successfully register account</string>
+    <string name="succ_login">Successfully login</string>
+    <string name="err_login">Invalid account</string>
+    <string name="err_regis">Failed register account</string>
 </resources>
