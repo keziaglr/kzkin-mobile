@@ -1,6 +1,6 @@
 package edu.bluejack21_2.KZkin.adapter
 
-import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import edu.bluejack21_2.KZkin.R
+import edu.bluejack21_2.KZkin.activity.ProductDetailUserActivity
 import edu.bluejack21_2.KZkin.model.Product
 
 
@@ -23,13 +24,13 @@ class ProductAdapter(private val Context: Any) : RecyclerView.Adapter<RecyclerVi
     override fun getItemCount() = productList!!.size
 
     class ProductViewHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val productImage: ImageView? = itemView.findViewById(R.id.viewProductImageCard)
-        val productBrand: TextView? = itemView.findViewById(R.id.viewProductBrandCard)
-        val productName: TextView? = itemView.findViewById(R.id.viewProductNameCard)
-        val productRating: TextView? = itemView.findViewById(R.id.viewProductRatingCard)
+        val productImage: ImageView? = itemView.findViewById(R.id.viewPosterImage)
+        val productBrand: TextView? = itemView.findViewById(R.id.viewPosterName)
+        val productName: TextView? = itemView.findViewById(R.id.viewPosterAge)
+        val productRating: TextView? = itemView.findViewById(R.id.viewReviewRating)
 
         fun binding(product: Product){
-             productName?.setText(product.name)
+            productName?.setText(product.name)
             productBrand?.setText(product.brand)
             productRating?.setText(product.rating.toString())
             Log.e("ProductAdapter", "${product.name} ${product.brand} ${product.rating}")
@@ -58,6 +59,12 @@ class ProductAdapter(private val Context: Any) : RecyclerView.Adapter<RecyclerVi
         when(holder) {
             is ProductViewHolder -> {
                 holder.binding(productList!!.get(position))
+                holder.itemView.setOnClickListener{
+                    var intent = Intent(it.context, ProductDetailUserActivity::class.java)
+                    intent.putExtra("id", productList!!.get(position).id)
+                    intent.putExtra("img", productList!!.get(position).image)
+                    it.context.startActivities(arrayOf(intent))
+                }
             }
         }
     }

@@ -26,14 +26,17 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="151dp">
 
         <!--ImageVIew to display our Course Image-->
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/viewPosterImage"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_margin="10dp"
+            android:layout_width="58dp"
+            android:layout_height="53dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
             android:contentDescription="@string/app_name"
             android:padding="5dp"
             android:src="@drawable/ic_home" />
@@ -41,7 +44,7 @@
         <!--Text View to display Course Name-->
         <TextView
             android:id="@+id/viewPosterName"
-            android:layout_width="200dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
@@ -49,7 +52,7 @@
             android:fontFamily="@font/poppins_bold"
             android:text="Product Brand"
             android:textColor="@color/black"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:textStyle="bold" />
 
         <!--Text VIew to display COurse Rating-->
@@ -66,21 +69,71 @@
             android:fontFamily="@font/poppins"
             android:text="Product Name"
             android:textColor="@color/black"
-            android:textSize="14sp" />
+            android:textSize="10sp" />
 
         <TextView
             android:id="@+id/viewReviewRating"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/viewPosterAge"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="14dp"
-            android:layout_toEndOf="@id/viewPosterImage"
+            android:layout_above="@+id/viewPosterAge"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="39dp"
+            android:layout_marginBottom="10dp"
             android:drawablePadding="1dp"
             android:fontFamily="@font/poppins"
             android:text="5"
             android:textSize="12sp"
             app:drawableStartCompat="@drawable/ic_star" />
+
+        <TextView
+            android:id="@+id/viewPosterReview"
+            android:layout_width="359dp"
+            android:layout_height="40dp"
+            android:layout_below="@+id/viewPosterAge"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="9dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/poppins"
+            android:text="TextView"
+            android:textSize="10sp" />
+
+        <ImageButton
+            android:id="@+id/btnEditReview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/viewPosterReview"
+            android:layout_marginStart="3dp"
+            android:layout_marginTop="5dp"
+            android:layout_toEndOf="@+id/btnDeleteReview"
+            android:backgroundTint="@color/white"
+            app:srcCompat="@drawable/ic_edit" />
+
+        <ImageButton
+            android:id="@+id/btnDeleteReview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/viewPosterReview"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="3dp"
+            android:layout_marginTop="5dp"
+            android:backgroundTint="@color/white"
+            app:srcCompat="@drawable/ic_delete" />
+
+        <TextView
+            android:id="@+id/viewReviewLike"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/viewPosterReview"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="49dp"
+            android:drawablePadding="1dp"
+            android:fontFamily="@font/poppins"
+            android:text="5"
+            android:textSize="12sp"
+            app:drawableStartCompat="@drawable/ic_favorite" />
+
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

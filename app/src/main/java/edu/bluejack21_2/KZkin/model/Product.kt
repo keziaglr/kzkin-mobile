@@ -11,9 +11,8 @@ data class Product (
     var category: String? = null,
     var description: String? = null,
     var image: String? = null,
-    var rating: Long? = 0,
+    var rating: Float? = 0.0f,
     var reviews: Long? = 0,
     @ServerTimestamp var createdAt: Timestamp? = null,
     @ServerTimestamp var updatedAt: Timestamp? = null,
-
 )

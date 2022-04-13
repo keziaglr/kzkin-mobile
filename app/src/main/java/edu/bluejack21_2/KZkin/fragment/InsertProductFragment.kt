@@ -94,7 +94,7 @@ class InsertProductFragment : Fragment() {
                 Toast.makeText(requireContext(), getString(R.string.err_desc), Toast.LENGTH_LONG).show()
             }else{
                 val product = Product("", productName, productBrand, productCategory, productDescription,
-                    photoProduct!!, 0, 0, Timestamp.now(), Timestamp.now())
+                    photoProduct!!, 0.0f, 0, Timestamp.now(), Timestamp.now())
                 db.collection("products").add(product)
                     .addOnSuccessListener { documentReference ->
                         Toast.makeText(requireContext(), getString(R.string.succ_submit), Toast.LENGTH_SHORT).show()

@@ -173,7 +173,7 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun uploadFile() {
         if (filePath != null) {
-            val imageRef = storageReference!!.child("product/" + UUID.randomUUID().toString() )
+            val imageRef = storageReference!!.child("user/" + UUID.randomUUID().toString() )
             imageRef.putFile(filePath!!)
                 .addOnSuccessListener {
                     imageRef.downloadUrl.addOnSuccessListener {

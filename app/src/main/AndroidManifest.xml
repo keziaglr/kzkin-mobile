@@ -13,6 +13,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.KZkin">
         <activity
+            android:name=".activity.UpdateReviewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.InsertReviewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.ProductDetailAdminActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.ProductDetailUserActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.MainActivityAdmin"
             android:exported="false" />
         <activity
