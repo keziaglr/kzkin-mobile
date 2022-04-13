@@ -1,29 +1,29 @@
 package edu.bluejack21_2.KZkin.adapter
 
+import android.content.Context
 import android.content.Intent
-import android.icu.lang.UCharacter.getAge
 import android.text.format.DateFormat
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import edu.bluejack21_2.KZkin.R
-import edu.bluejack21_2.KZkin.activity.ProductDetailUserActivity
 import edu.bluejack21_2.KZkin.activity.UpdateReviewActivity
+import edu.bluejack21_2.KZkin.model.Like
 import edu.bluejack21_2.KZkin.model.Product
 import edu.bluejack21_2.KZkin.model.Review
 import edu.bluejack21_2.KZkin.model.User
 import java.util.*
-import kotlin.collections.ArrayList
+
 
 class ReviewAdapter (private val Context: Any) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var reviewList: ArrayList<Review>? = ArrayList()
@@ -41,6 +41,9 @@ class ReviewAdapter (private val Context: Any) : RecyclerView.Adapter<RecyclerVi
         val userAge: TextView? = itemView.findViewById(R.id.viewPosterAge)
         val likes: TextView? = itemView.findViewById(R.id.viewReviewLike)
         val editBtn : ImageButton = itemView.findViewById(R.id.btnEditReview)
+        val deleteBtn: ImageButton = itemView.findViewById(R.id.btnDeleteReview)
+        val favBtn: ImageButton = itemView.findViewById(R.id.btnLikeReview)
+        val numLikes: TextView = itemView.findViewById(R.id.viewReviewLike)
 
         fun binding(review: Review){
             reviews?.setText(review.review.toString())
@@ -74,6 +77,18 @@ class ReviewAdapter (private val Context: Any) : RecyclerView.Adapter<RecyclerVi
                 }else{
                     userAge?.setText("unknown")
                 }
+                var counter = 0
+                val db = Firebase.firestore
+                db.collection("likes").whereEqualTo("reviewId", review.id).get().addOnCompleteListener {task->
+                    if(task.isSuccessful){
+                        for (document in task.result) {
+                            Log.e("DATA", document.data.toString())
+                            counter++
+                        }
+                        db.collection("reviews").document(review.id.toString()).set(Review(review.id, review.userId, review.productId, review.review, review.rating, counter.toLong(), review.createdAt, Timestamp.now()))
+                        numLikes.setText(counter.toString())
+                    }
+                }
             }
 
 
@@ -103,6 +118,8 @@ class ReviewAdapter (private val Context: Any) : RecyclerView.Adapter<RecyclerVi
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val newList = reviewList?.get(position)
+        val db = Firebase.firestore
+        val auth = Firebase.auth
 
         when(holder) {
             is ReviewViewHolder -> {
@@ -112,6 +129,82 @@ class ReviewAdapter (private val Context: Any) : RecyclerView.Adapter<RecyclerVi
                     intent.putExtra("id", reviewList!!.get(position).id)
                     it.context.startActivities(arrayOf(intent))
                 }
+                holder.deleteBtn.setOnClickListener{
+
+                    reviewList!!.get(position).id?.let { it1 ->
+                        db.collection("reviews").document(
+                            it1
+                        ).delete()
+
+                        var product: Product? = null
+                        var pReview: Long? = null
+                        var pRating: Float? = null
+                        var count: Int = 0
+                        var sum: Float? = 0.0f
+                        var productId = reviewList!!.get(position).productId
+                        db.collection("reviews").whereEqualTo("productId", productId).get().addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                for (document in task.result) {
+                                    var review = document.toObject(Review::class.java)
+                                    sum = sum?.plus(review.rating)
+                                    count++
+                                }
+
+                                if (productId != null) {
+                                    db.collection("products").document(productId).get().addOnSuccessListener {
+                                        if(it != null){
+                                            val newRating = sum?.div(count.toFloat())
+                                            product = it.toObject(Product::class.java)
+                                            pReview = product!!.reviews
+                                            pRating = product!!.rating
+                                            pReview = count.toLong()
+                                            pRating = newRating
+                                            var uProduct= Product("", product!!.name, product!!.brand, product!!.category, product!!.description,
+                                                product!!.image, pRating, pReview, product!!.createdAt, Timestamp.now())
+
+                                            if(uProduct != null){
+                                                db.collection("products").document(productId).set(uProduct!!)
+                                            }
+
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        Toast.makeText(it.context, R.string.succ_delete, Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                db.collection("likes").whereEqualTo("userId", auth.currentUser!!.uid).whereEqualTo("reviewId", reviewList!!.get(position).id).get().addOnCompleteListener { task->
+
+                    if (task.isSuccessful){
+                        if(task.result.isEmpty){
+                            holder.favBtn.setImageResource(R.drawable.ic_unfavorite);
+                        }else{
+                            holder.favBtn.setImageResource(R.drawable.ic_favorite);
+                        }
+                    }
+                    var counter = 0
+                    holder.favBtn.setOnClickListener {
+                        if (task.isSuccessful){
+                            if(task.result.isEmpty){
+                                holder.favBtn.setImageResource(R.drawable.ic_favorite);
+                                var like = Like("", auth.currentUser!!.uid, reviewList!!.get(position).id)
+                                db.collection("likes").add(like)
+
+                            }else{
+                                val like = task.result.documents[0]
+                                like.toObject(Like::class.java)
+                                holder.favBtn.setImageResource(R.drawable.ic_unfavorite);
+                                db.collection("likes").document(like.id).delete()
+
+                            }
+                        }
+                    }
+                }
+                    .addOnFailureListener {
+                        Log.e("fave", "FAIL")
+                    }
             }
         }
     }

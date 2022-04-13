@@ -79,4 +79,17 @@
     <string name="label_rating">Rating</string>
     <string name="err_update_profile">Please update your profile</string>
     <string name="title_update_review">Update Review</string>
+    <string name="succ_delete">Success Delete Data</string>
+    <string name="title_filter">Filter Review</string>
+    <string name="label_filter_most_liked">Most Liked Review</string>
+    <string name="label_filter_skin_type">Skin Type</string>
+    <string name="label_filter_age">Age</string>
+    <string name="label_reset">Reset</string>
+    <string-array name="label_rating">
+        <item>5</item>
+        <item>4</item>
+        <item>3</item>
+        <item>2</item>
+        <item>1</item>
+    </string-array>
 </resources>

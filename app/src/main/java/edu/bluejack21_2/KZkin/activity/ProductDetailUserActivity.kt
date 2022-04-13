@@ -5,10 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -25,6 +22,9 @@ import edu.bluejack21_2.KZkin.adapter.ReviewAdapter
 import edu.bluejack21_2.KZkin.model.Product
 import edu.bluejack21_2.KZkin.model.Review
 import edu.bluejack21_2.KZkin.model.User
+import android.text.format.DateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class ProductDetailUserActivity : AppCompatActivity(){
     private val db = Firebase.firestore
@@ -36,12 +36,19 @@ class ProductDetailUserActivity : AppCompatActivity(){
     private var filter : String = ""
     private var index = 5
     private var id = ""
+    var fAge = 0
     var linearLayoutManager : LinearLayoutManager? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_product_detail_user)
 
         id = intent.extras?.getString("id").toString()
+
+        if(intent.extras?.getInt("fAge") != null){
+            fAge = intent.extras?.getString("fAge")!!
+            Log.e("FAE", fAge.toString())
+        }
+
 
         reviewRV = findViewById<RecyclerView>(R.id.viewReviewRV)
         reviewList = ArrayList<Review>()
@@ -93,6 +100,13 @@ class ProductDetailUserActivity : AppCompatActivity(){
             }
         }
 
+        var btnFilter = findViewById<ImageButton>(R.id.buttonFilterReview)
+        btnFilter.setOnClickListener {
+            var intent = Intent(this, FilterReviewActivity::class.java)
+            intent.putExtra("id", id)
+            startActivity(intent)
+        }
+
 
 //        setTab()
     }
@@ -131,6 +145,21 @@ class ProductDetailUserActivity : AppCompatActivity(){
     }
 
 
+    private fun getAge(year: Int, month: Int, day: Int): Int? {
+        val dob = Calendar.getInstance()
+        val today = Calendar.getInstance()
+        dob[year, month] = day
+        var age = today[Calendar.YEAR] - dob[Calendar.YEAR]
+        Log.e("NOW", today[Calendar.YEAR].toString())
+        Log.e("BDAY ", dob[Calendar.YEAR].toString())
+        Log.e("selisih", age.toString())
+        if (today[Calendar.DAY_OF_YEAR] < dob[Calendar.DAY_OF_YEAR]) {
+            age--
+        }
+        val ageInt = age
+        return ageInt
+    }
+
     private fun getALlReview(){
         var temp : Query = db.collection("reviews").whereEqualTo("productId", id)
 
@@ -156,7 +185,22 @@ class ProductDetailUserActivity : AppCompatActivity(){
                 for (document in result) {
                     val review = document.toObject(Review::class.java)
                     Log.e("REVIEW", review.id.toString())
-                    reviewList!!.add(review)
+                    Log.e("FAGEE", fAge.toString())
+                    if(intent.extras!!.getInt("age") != 0){
+                        db.collection("users").document(auth.currentUser!!.uid).get().addOnSuccessListener {
+                            var user = it.toObject(User::class.java)
+                            val monthNumber = DateFormat.format("MM", user!!.dob)
+                            val yearNumber = DateFormat.format("yyyy", user!!.dob)
+                            val dayNumber = DateFormat.format("dd", user!!.dob)
+                            var uAge = getAge(Integer.parseInt(yearNumber.toString()) , Integer.parseInt(monthNumber.toString()), Integer.parseInt(dayNumber.toString()))
+                            var fAge = intent.extras!!.getInt("age")
+                            if(uAge == fAge){
+                                reviewList!!.add(review)
+                            }
+                        }
+                    }else{
+                        reviewList!!.add(review)
+                    }
                 }
                 reviewAdapter!!.submitList(reviewList!!)
             }

@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.KZkin">
         <activity
+            android:name=".activity.FilterReviewActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.UpdateReviewActivity"
             android:exported="false" />
         <activity

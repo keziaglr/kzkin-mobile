@@ -46,8 +46,8 @@ class InsertProduct : AppCompatActivity() {
 
         val buttonSubmit = findViewById<Button>(R.id.buttonSubmitInsertProduct)
         val inputProductName = findViewById<TextInputLayout>(R.id.inputInsertProductName)
-        val inputProductBrand = findViewById<TextInputLayout>(R.id.inputInsertProductBrand)
-        val inputProductCategory = findViewById<TextInputLayout>(R.id.inputInsertProductCategory)
+        val inputProductBrand = findViewById<TextInputLayout>(R.id.inputFilterAge)
+        val inputProductCategory = findViewById<TextInputLayout>(R.id.inputFilterSkinType)
         val inputProductDescription = findViewById<TextInputLayout>(R.id.inputInsertProductDescription)
         val buttonProductImage = findViewById<Button>(R.id.buttonInsertProductImage)
 

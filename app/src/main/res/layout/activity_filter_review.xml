@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/base_pink"
+    tools:context=".activity.FilterReviewActivity">
+
+    <TextView
+        android:id="@+id/titleFilterReview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="52dp"
+        android:fontFamily="@font/poppins_bold"
+        android:text="@string/title_filter"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="#000000"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputFilterAge"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="289dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:ems="10"
+        android:fontFamily="@font/poppins"
+        android:hint="@string/label_filter_age"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titleFilterReview">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins"
+            android:inputType="number"
+            android:textSize="14sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputFilterSkinType"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="289dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="35dp"
+        android:hint="@string/label_skin_type"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inputFilterAge">
+
+        <AutoCompleteTextView
+            android:id="@+id/autoCompleteFilterSkinTextView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:fontFamily="@font/poppins"
+            android:inputType="none"
+            android:textColor="#000000"
+            android:textSize="14sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <Button
+        android:id="@+id/buttonSubmitFilterReview"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="64dp"
+        android:backgroundTint="#FFB5A7"
+        android:fontFamily="@font/poppins_bold"
+        android:text="@string/label_submit"
+        android:textColor="@android:color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.808"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cbFilterMostLiked" />
+
+    <Button
+        android:id="@+id/buttonResetFilter"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="64dp"
+        android:backgroundTint="#FFB5A7"
+        android:fontFamily="@font/poppins_bold"
+        android:text="@string/label_reset"
+        android:textColor="@android:color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.191"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cbFilterMostLiked" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputFilterRating"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="289dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="35dp"
+        android:hint="@string/label_rating"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inputFilterSkinType">
+
+        <AutoCompleteTextView
+            android:id="@+id/autoCompleteRatingTextView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:fontFamily="@font/poppins"
+            android:inputType="none"
+            android:textColor="#000000"
+            android:textSize="14sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <CheckBox
+        android:id="@+id/cbFilterMostLiked"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/poppins"
+        android:text="@string/label_filter_most_liked"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inputFilterRating" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

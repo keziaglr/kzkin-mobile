@@ -32,8 +32,7 @@ class ProductAdapter(private val Context: Any) : RecyclerView.Adapter<RecyclerVi
         fun binding(product: Product){
             productName?.setText(product.name)
             productBrand?.setText(product.brand)
-            productRating?.setText(product.rating.toString())
-            Log.e("ProductAdapter", "${product.name} ${product.brand} ${product.rating}")
+            productRating?.setText(String.format("%.1f", product.rating))
             val requestOption = RequestOptions()
                 .placeholder(R.drawable.ic_launcher_background)
                 .error(R.drawable.ic_launcher_background)

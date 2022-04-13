@@ -66,8 +66,8 @@ class InsertProductFragment : Fragment() {
 
         val buttonSubmit = requireView().findViewById<Button>(R.id.buttonSubmitInsertProduct)
         val inputProductName = requireView().findViewById<TextInputLayout>(R.id.inputInsertProductName)
-        val inputProductBrand = requireView().findViewById<TextInputLayout>(R.id.inputInsertProductBrand)
-        val inputProductCategory = requireView().findViewById<TextInputLayout>(R.id.inputInsertProductCategory)
+        val inputProductBrand = requireView().findViewById<TextInputLayout>(R.id.inputFilterAge)
+        val inputProductCategory = requireView().findViewById<TextInputLayout>(R.id.inputFilterSkinType)
         val inputProductDescription = requireView().findViewById<TextInputLayout>(R.id.inputInsertProductDescription)
         val buttonProductImage = requireView().findViewById<Button>(R.id.buttonInsertProductImage)
 
