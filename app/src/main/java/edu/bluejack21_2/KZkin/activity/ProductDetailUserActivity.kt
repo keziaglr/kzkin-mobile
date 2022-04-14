@@ -32,22 +32,16 @@ class ProductDetailUserActivity : AppCompatActivity(){
     private var reviewRV: RecyclerView? = null
     private var reviewAdapter: ReviewAdapter? = null
     private var reviewList: ArrayList<Review>? = null
-    private var sort = -1
-    private var filter : String = ""
+    private var tempList: ArrayList<Review> = ArrayList()
+    private var userList: ArrayList<User> = ArrayList()
     private var index = 5
     private var id = ""
-    var fAge = 0
     var linearLayoutManager : LinearLayoutManager? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_product_detail_user)
 
         id = intent.extras?.getString("id").toString()
-
-        if(intent.extras?.getInt("fAge") != null){
-            fAge = intent.extras?.getString("fAge")!!
-            Log.e("FAE", fAge.toString())
-        }
 
 
         reviewRV = findViewById<RecyclerView>(R.id.viewReviewRV)
@@ -60,6 +54,14 @@ class ProductDetailUserActivity : AppCompatActivity(){
         reviewAdapter!!.notifyDataSetChanged()
 
         refreshPage()
+
+        db.collection("users").get().addOnCompleteListener {
+            if(it.isSuccessful){
+                for (document in it.result){
+                    userList.add(document.toObject(User::class.java))
+                }
+            }
+        }
 
         if (id != null ) {
             db.collection("products").document(id).get()
@@ -125,15 +127,15 @@ class ProductDetailUserActivity : AppCompatActivity(){
         reviewRV!!.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
+                Log.e("TEST", "${dy} ${reviewAdapter!!.itemCount}")
                 if (dy > 0) {
                     var vItem = linearLayoutManager!!.childCount
                     var lItem = linearLayoutManager!!.findFirstCompletelyVisibleItemPosition()
                     var count = reviewAdapter!!.itemCount
                     Log.e("TEST", "${vItem} ${lItem} ${count}")
                     if((vItem + lItem) == count){
-
                         Log.e("INDEX", index.toString())
-                        if (index <= reviewList!!.size){
+                        if (index < reviewList!!.size){
                             index++
                         }
                         getALlReview()
@@ -150,9 +152,6 @@ class ProductDetailUserActivity : AppCompatActivity(){
         val today = Calendar.getInstance()
         dob[year, month] = day
         var age = today[Calendar.YEAR] - dob[Calendar.YEAR]
-        Log.e("NOW", today[Calendar.YEAR].toString())
-        Log.e("BDAY ", dob[Calendar.YEAR].toString())
-        Log.e("selisih", age.toString())
         if (today[Calendar.DAY_OF_YEAR] < dob[Calendar.DAY_OF_YEAR]) {
             age--
         }
@@ -163,49 +162,81 @@ class ProductDetailUserActivity : AppCompatActivity(){
     private fun getALlReview(){
         var temp : Query = db.collection("reviews").whereEqualTo("productId", id)
 
-//        if(!filter.equals("")){
-//            temp = temp.whereEqualTo("category", filter)
-//        }
-//
-//        if (sort != -1){
-//            if (sort == 0){
-//                temp = temp.orderBy("createdAt", Query.Direction.ASCENDING)
-//            }else if (sort == 1){
-//                temp = temp.orderBy("createdAt", Query.Direction.DESCENDING)
-//            }else if (sort == 2){
-//                temp = temp.orderBy("rating", Query.Direction.DESCENDING)
-//            }else if (sort == 3){
-//                temp = temp.orderBy("rating", Query.Direction.ASCENDING)
-//            }
-//        }
+        if(intent.extras!!.getString("fRating") != null && intent.extras!!.getString("fRating")!!.isEmpty() == false){
+            temp = temp.whereEqualTo("rating", intent.extras!!.getString("fRating")!!.toFloat())
+        }
+
+        if(intent.extras!!.getString("fLike") != null && intent.extras!!.getString("fLike") == "true"){
+            temp = temp.orderBy("like", Query.Direction.DESCENDING)
+        }
 
         temp.get()
             .addOnSuccessListener { result ->
                 reviewList!!.clear()
+                tempList.clear()
                 for (document in result) {
                     val review = document.toObject(Review::class.java)
-                    Log.e("REVIEW", review.id.toString())
-                    Log.e("FAGEE", fAge.toString())
-                    if(intent.extras!!.getInt("age") != 0){
-                        db.collection("users").document(auth.currentUser!!.uid).get().addOnSuccessListener {
-                            var user = it.toObject(User::class.java)
-                            val monthNumber = DateFormat.format("MM", user!!.dob)
-                            val yearNumber = DateFormat.format("yyyy", user!!.dob)
-                            val dayNumber = DateFormat.format("dd", user!!.dob)
-                            var uAge = getAge(Integer.parseInt(yearNumber.toString()) , Integer.parseInt(monthNumber.toString()), Integer.parseInt(dayNumber.toString()))
-                            var fAge = intent.extras!!.getInt("age")
-                            if(uAge == fAge){
-                                reviewList!!.add(review)
-                            }
+                    if(intent.extras!!.getString("fAge") != null && intent.extras!!.getString("fSkin") != null && intent.extras!!.getString("fAge")!!.isEmpty() == false && intent.extras!!.getString("fSkin")!!.isEmpty() == false) {
+                        Log.e("FB", "AGE SKIN")
+                        if (checkAge(review.userId!!) && checkSkin(review.userId!!)) {
+                            reviewList!!.add(review)
+                        }
+                    }else if(intent.extras!!.getString("fAge") != null && intent.extras!!.getString("fAge")!!.isEmpty() == false){
+                        Log.e("FB", "AGE")
+                        if (checkAge(review.userId!!)) {
+                            reviewList!!.add(review)
+                        }
+                    }else if(intent.extras!!.getString("fSkin") != null && intent.extras!!.getString("fSkin")!!.isEmpty() == false){
+                        Log.e("FB", "SKIN")
+                        if (checkSkin(review.userId!!)) {
+                            reviewList!!.add(review)
                         }
                     }else{
                         reviewList!!.add(review)
                     }
                 }
-                reviewAdapter!!.submitList(reviewList!!)
+                Log.e("Review Adapter dipanbgggil", "this")
+                if(reviewList!!.size >= 5){
+                    for (i in 0 until index){
+                        tempList.add(reviewList!!.get(i))
+                    }
+                }else{
+                    for(review in reviewList!!){
+                        tempList.add(review)
+                    }
+                }
+
+                Handler().postDelayed({
+                    reviewAdapter!!.submitList(tempList!!)
+                }, 5000)
             }
             .addOnFailureListener { exception ->
                 Log.d("hi", "Error getting documents: ", exception) }
+    }
+
+    fun checkAge(userId: String) : Boolean{
+        for (user in userList){
+            val monthNumber = DateFormat.format("MM", user!!.dob)
+            val yearNumber = DateFormat.format("yyyy", user!!.dob)
+            val dayNumber = DateFormat.format("dd", user!!.dob)
+            var uAge = getAge(Integer.parseInt(yearNumber.toString()) , Integer.parseInt(monthNumber.toString()), Integer.parseInt(dayNumber.toString()))
+            var fAge = intent.extras!!.getString("fAge")
+            if(uAge == fAge!!.toInt()){
+                return true
+            }
+        }
+        return false
+    }
+
+    fun checkSkin(userId: String) : Boolean{
+        for (user in userList){
+            Log.e("FB", "${user!!.skinType.toString()} ${intent.extras!!.getString("fSkin").toString()}")
+            if(intent.extras!!.getString("fSkin").toString() == user!!.skinType.toString()){
+                Log.e("FB TRUE", user!!.skinType.toString())
+                return true
+            }
+        }
+        return false
     }
 
 

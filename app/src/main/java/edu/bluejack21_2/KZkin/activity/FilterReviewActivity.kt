@@ -37,12 +37,13 @@ class FilterReviewActivity : AppCompatActivity() {
             var skin = inputSkin.editText!!.text
             var like = mostLiked.isSelected
             var rating = inputRating.editText!!.text
-//            Log.e("VALUE", "${age} ${skin} ${like}")
             var intent = Intent(this, ProductDetailUserActivity::class.java)
-            intent.putExtra("fAge", age)
-            intent.putExtra("skin", skin)
-            intent.putExtra("like", like)
-            intent.putExtra("rating", rating)
+            intent.putExtra("fAge", age.toString())
+            intent.putExtra("fSkin", skin.toString())
+            intent.putExtra("fLike", like.toString())
+            intent.putExtra("fRating", rating.toString())
+
+            Log.e("FILTERR", "AGE ${age.toString()} SKIN ${skin.toString()} LIKE ${like.toString()} RATING ${rating.toString()}")
             intent.putExtra("id", productId.toString())
             Log.e("FILTER", age.toString())
             startActivity(intent)
@@ -52,7 +53,7 @@ class FilterReviewActivity : AppCompatActivity() {
             inputAge.editText!!.text = null
             inputSkin.editText!!.text = null
             inputRating.editText!!.text = null
-            mostLiked.isSelected = false
+            mostLiked.isChecked = false
         }
     }
 }

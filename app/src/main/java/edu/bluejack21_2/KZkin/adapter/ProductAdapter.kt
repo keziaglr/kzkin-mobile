@@ -61,7 +61,6 @@ class ProductAdapter(private val Context: Any) : RecyclerView.Adapter<RecyclerVi
                 holder.itemView.setOnClickListener{
                     var intent = Intent(it.context, ProductDetailUserActivity::class.java)
                     intent.putExtra("id", productList!!.get(position).id)
-                    intent.putExtra("img", productList!!.get(position).image)
                     it.context.startActivities(arrayOf(intent))
                 }
             }

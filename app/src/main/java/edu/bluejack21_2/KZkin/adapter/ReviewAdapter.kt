@@ -45,10 +45,13 @@ class ReviewAdapter (private val Context: Any) : RecyclerView.Adapter<RecyclerVi
         val favBtn: ImageButton = itemView.findViewById(R.id.btnLikeReview)
         val numLikes: TextView = itemView.findViewById(R.id.viewReviewLike)
 
+
+
         fun binding(review: Review){
             reviews?.setText(review.review.toString())
             ratings?.setText(review.rating.toString())
             likes?.setText(review.likes.toString())
+            Log.e("REVIEW ADAPTER", review.review.toString())
 
             val db = Firebase.firestore
             db.collection("users").document(review!!.userId.toString()).get().addOnSuccessListener {
@@ -124,54 +127,64 @@ class ReviewAdapter (private val Context: Any) : RecyclerView.Adapter<RecyclerVi
         when(holder) {
             is ReviewViewHolder -> {
                 holder.binding(reviewList!!.get(position))
-                holder.editBtn.setOnClickListener{
-                    var intent = Intent(it.context, UpdateReviewActivity::class.java)
-                    intent.putExtra("id", reviewList!!.get(position).id)
-                    it.context.startActivities(arrayOf(intent))
-                }
-                holder.deleteBtn.setOnClickListener{
 
-                    reviewList!!.get(position).id?.let { it1 ->
-                        db.collection("reviews").document(
-                            it1
-                        ).delete()
+                db.collection("reviews").document(reviewList!!.get(position).id.toString()).get().addOnSuccessListener {
+                    var rev = it.toObject(Review::class.java)
+                    if(rev!!.userId == auth.currentUser!!.uid){
+                        Log.e("USER PROD ADAPT", "${rev!!.userId} ${auth.currentUser!!.uid}")
+                        holder.editBtn.visibility = View.VISIBLE
+                        holder.deleteBtn.visibility = View.VISIBLE
+                        holder.editBtn.setOnClickListener{
+                            var intent = Intent(it.context, UpdateReviewActivity::class.java)
+                            intent.putExtra("id", reviewList!!.get(position).id)
+                            it.context.startActivities(arrayOf(intent))
+                        }
+                        holder.deleteBtn.setOnClickListener{
 
-                        var product: Product? = null
-                        var pReview: Long? = null
-                        var pRating: Float? = null
-                        var count: Int = 0
-                        var sum: Float? = 0.0f
-                        var productId = reviewList!!.get(position).productId
-                        db.collection("reviews").whereEqualTo("productId", productId).get().addOnCompleteListener { task ->
-                            if (task.isSuccessful) {
-                                for (document in task.result) {
-                                    var review = document.toObject(Review::class.java)
-                                    sum = sum?.plus(review.rating)
-                                    count++
-                                }
+                            reviewList!!.get(position).id?.let { it1 ->
+                                db.collection("reviews").document(
+                                    it1
+                                ).delete()
 
-                                if (productId != null) {
-                                    db.collection("products").document(productId).get().addOnSuccessListener {
-                                        if(it != null){
-                                            val newRating = sum?.div(count.toFloat())
-                                            product = it.toObject(Product::class.java)
-                                            pReview = product!!.reviews
-                                            pRating = product!!.rating
-                                            pReview = count.toLong()
-                                            pRating = newRating
-                                            var uProduct= Product("", product!!.name, product!!.brand, product!!.category, product!!.description,
-                                                product!!.image, pRating, pReview, product!!.createdAt, Timestamp.now())
+                                var product: Product? = null
+                                var pReview: Long? = null
+                                var pRating: Float? = null
+                                var count: Int = 0
+                                var sum: Float? = 0.0f
+                                var productId = reviewList!!.get(position).productId
+                                db.collection("reviews").whereEqualTo("productId", productId).get().addOnCompleteListener { task ->
+                                    if (task.isSuccessful) {
+                                        for (document in task.result) {
+                                            var review = document.toObject(Review::class.java)
+                                            sum = sum?.plus(review.rating)
+                                            count++
+                                        }
 
-                                            if(uProduct != null){
-                                                db.collection("products").document(productId).set(uProduct!!)
+                                        if (productId != null) {
+                                            db.collection("products").document(productId).get().addOnSuccessListener {
+                                                if(it != null){
+                                                    val newRating = sum?.div(count.toFloat())
+                                                    product = it.toObject(Product::class.java)
+                                                    pReview = product!!.reviews
+                                                    pRating = product!!.rating
+                                                    pReview = count.toLong()
+                                                    pRating = newRating
+                                                    var uProduct= Product("", product!!.name, product!!.brand, product!!.category, product!!.description,
+                                                        product!!.image, pRating, pReview, product!!.createdAt, Timestamp.now())
+
+                                                    if(uProduct != null){
+                                                        db.collection("products").document(productId).set(uProduct!!)
+                                                    }
+
+                                                }
                                             }
-
                                         }
                                     }
                                 }
+                                Toast.makeText(it.context, R.string.succ_delete, Toast.LENGTH_SHORT).show()
                             }
                         }
-                        Toast.makeText(it.context, R.string.succ_delete, Toast.LENGTH_SHORT).show()
+
                     }
                 }
 
