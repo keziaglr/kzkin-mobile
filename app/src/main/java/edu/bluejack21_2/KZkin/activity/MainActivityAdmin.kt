@@ -7,11 +7,14 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import edu.bluejack21_2.KZkin.R
 import edu.bluejack21_2.KZkin.fragment.HomeFragment
 import edu.bluejack21_2.KZkin.fragment.InsertProductFragment
+import edu.bluejack21_2.KZkin.fragment.ProfileInformationFragment
+import edu.bluejack21_2.KZkin.fragment.ProfileUserFragment
 import edu.bluejack21_2.KZkin.model.User
 
 class MainActivityAdmin : AppCompatActivity() {
     private val home = HomeFragment()
     private val insertProduct = InsertProductFragment()
+    private val profile = ProfileInformationFragment()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -22,6 +25,7 @@ class MainActivityAdmin : AppCompatActivity() {
             when(it.itemId){
                 R.id.page_1_admin -> replacementFragment(home)
                 R.id.page_2_admin -> replacementFragment(insertProduct)
+                R.id.page_3_admin -> replacementFragment(profile)
             }
             true
         }

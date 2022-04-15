@@ -11,15 +11,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#F8EDEB"
-        tools:context=".fragment.InsertProductFragment">
+        tools:context=".activity.UpdateProductActivity">
 
         <TextView
-            android:id="@+id/titleInsertProductForm"
+            android:id="@+id/titleUpdateProductForm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="52dp"
             android:fontFamily="@font/poppins_bold"
-            android:text="@string/title_insert_product"
+            android:text="@string/title_update_product"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textColor="#000000"
             android:textSize="24sp"
@@ -28,7 +28,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/inputInsertProductName"
+            android:id="@+id/inputUpdateProductName"
             android:layout_width="289dp"
             android:layout_height="64dp"
             android:layout_marginTop="40dp"
@@ -39,7 +39,7 @@
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/titleInsertProductForm"
+            app:layout_constraintTop_toBottomOf="@+id/titleUpdateProductForm"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             >
 
@@ -51,7 +51,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/inputInsertProductBrand"
+            android:id="@+id/inputUpdateProductBrand"
             android:layout_width="289dp"
             android:layout_height="64dp"
             android:layout_marginTop="35dp"
@@ -63,7 +63,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            app:layout_constraintTop_toBottomOf="@+id/inputInsertProductName">
+            app:layout_constraintTop_toBottomOf="@+id/inputUpdateProductName">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -73,7 +73,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/inputInsertProductCategory"
+            android:id="@+id/inputUpdateProductCategory"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="289dp"
             android:layout_height="64dp"
@@ -81,11 +81,11 @@
             android:hint="@string/label_product_category"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/inputInsertProductBrand"
+            app:layout_constraintTop_toBottomOf="@+id/inputUpdateProductBrand"
             >
 
             <AutoCompleteTextView
-                android:id="@+id/autoCompleteProductCategoryTextView"
+                android:id="@+id/autoCompleteProductCategoryTextViewUpdate"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -96,7 +96,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/inputInsertProductDescription"
+            android:id="@+id/inputUpdateProductDescription"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="289dp"
             android:layout_height="64dp"
@@ -110,7 +110,7 @@
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/inputInsertProductCategory">
+            app:layout_constraintTop_toBottomOf="@+id/inputUpdateProductCategory">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -120,7 +120,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:id="@+id/buttonInsertProductImage"
+            android:id="@+id/buttonUpdateProductImage"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
             android:layout_width="289dp"
             android:layout_height="64dp"
@@ -132,10 +132,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.496"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/inputInsertProductDescription" />
+            app:layout_constraintTop_toBottomOf="@+id/inputUpdateProductDescription" />
 
         <Button
-            android:id="@+id/buttonSubmitInsertProduct"
+            android:id="@+id/buttonSubmitUpdateProduct"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
             android:layout_centerHorizontal="true"
@@ -147,7 +147,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/buttonInsertProductImage"
+            app:layout_constraintTop_toBottomOf="@+id/buttonUpdateProductImage"
             app:layout_constraintVertical_bias="0.0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

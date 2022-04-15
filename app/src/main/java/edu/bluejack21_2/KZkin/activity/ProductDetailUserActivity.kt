@@ -173,7 +173,7 @@ class ProductDetailUserActivity : AppCompatActivity(){
         temp.get()
             .addOnSuccessListener { result ->
                 reviewList!!.clear()
-                tempList.clear()
+//                tempList.clear()
                 for (document in result) {
                     val review = document.toObject(Review::class.java)
                     if(intent.extras!!.getString("fAge") != null && intent.extras!!.getString("fSkin") != null && intent.extras!!.getString("fAge")!!.isEmpty() == false && intent.extras!!.getString("fSkin")!!.isEmpty() == false) {
@@ -197,7 +197,7 @@ class ProductDetailUserActivity : AppCompatActivity(){
                 }
                 Log.e("Review Adapter dipanbgggil", "this")
                 if(reviewList!!.size >= 5){
-                    for (i in 0 until index){
+                    for (i in tempList!!.size until index){
                         tempList.add(reviewList!!.get(i))
                     }
                 }else{
@@ -208,7 +208,7 @@ class ProductDetailUserActivity : AppCompatActivity(){
 
                 Handler().postDelayed({
                     reviewAdapter!!.submitList(tempList!!)
-                }, 5000)
+                }, 8000)
             }
             .addOnFailureListener { exception ->
                 Log.d("hi", "Error getting documents: ", exception) }
@@ -239,28 +239,4 @@ class ProductDetailUserActivity : AppCompatActivity(){
         return false
     }
 
-
-//    fun setTab(){
-//        val adapter = ProductDetailAdapter(supportFragmentManager)
-//        adapter.addFragment(ProductInformationUserFragment() , getString(R.string.tab_detail))
-//        adapter.addFragment(ProductReviewFragment() , getString(R.string.tab_review))
-//        val viewPager = findViewById<ViewPager>(R.id.view_pager_user)
-//        viewPager.adapter = adapter
-//        val tabs = findViewById<TabLayout>(R.id.tab_user)
-//        tabs.setupWithViewPager(viewPager)
-//    }
-
-//    override fun passDataCom(id: String) {
-//        val bundle = Bundle()
-//        bundle.putString("ids" , id)
-//
-//        val transaction = this.supportFragmentManager.beginTransaction()
-//
-//        val fragmentService = ProductInformationUserFragment()
-//        fragmentService.arguments = bundle
-//
-//        transaction.replace(R.id.view_pager_user, fragmentService)
-//        transaction.commit()
-//
-//    }
 }

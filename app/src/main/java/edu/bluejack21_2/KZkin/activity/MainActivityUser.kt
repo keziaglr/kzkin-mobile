@@ -13,10 +13,14 @@ import com.google.firebase.ktx.Firebase
 import edu.bluejack21_2.KZkin.fragment.HomeFragment
 import edu.bluejack21_2.KZkin.fragment.InsertProductFragment
 import edu.bluejack21_2.KZkin.R
+import edu.bluejack21_2.KZkin.fragment.NotificationFragment
+import edu.bluejack21_2.KZkin.fragment.ProfileUserFragment
 import edu.bluejack21_2.KZkin.model.User
 
 class MainActivityUser : AppCompatActivity() {
     private val home = HomeFragment()
+    private val notif = NotificationFragment()
+    private val profile = ProfileUserFragment()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -26,7 +30,8 @@ class MainActivityUser : AppCompatActivity() {
         bottom_navigation.setOnNavigationItemSelectedListener {
             when(it.itemId){
                 R.id.page_1 -> replacementFragment(home)
-//                R.id.page_2 -> replacementFragment(insertProduct)
+                R.id.page_2 -> replacementFragment(notif)
+                R.id.page_3 -> replacementFragment(profile)
             }
             true
         }

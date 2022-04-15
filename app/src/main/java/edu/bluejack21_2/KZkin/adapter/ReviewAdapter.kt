@@ -1,14 +1,19 @@
 package edu.bluejack21_2.KZkin.adapter
 
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
+import android.graphics.BitmapFactory
+import android.graphics.Color
+import android.os.Build
 import android.text.format.DateFormat
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -25,7 +30,7 @@ import edu.bluejack21_2.KZkin.model.User
 import java.util.*
 
 
-class ReviewAdapter (private val Context: Any) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ReviewAdapter (private val Contextt: Any) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var reviewList: ArrayList<Review>? = ArrayList()
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ReviewViewHolder {
         return ReviewViewHolder(LayoutInflater.from(viewGroup.context).inflate(R.layout.review_layout, viewGroup, false))
@@ -202,8 +207,45 @@ class ReviewAdapter (private val Context: Any) : RecyclerView.Adapter<RecyclerVi
                         if (task.isSuccessful){
                             if(task.result.isEmpty){
                                 holder.favBtn.setImageResource(R.drawable.ic_favorite);
-                                var like = Like("", auth.currentUser!!.uid, reviewList!!.get(position).id)
+                                var like = Like("", auth.currentUser!!.uid, reviewList!!.get(position).id, Timestamp.now())
                                 db.collection("likes").add(like)
+                                var builder : Notification.Builder
+                                var notificationManager : NotificationManager
+                                var notificationChannel : NotificationChannel
+                                val channelId = "edu.bluejack21_2.KZkin"
+                                var description = "Test"
+                                val context: Context = holder.itemView.getContext()
+
+                                notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+                                db.collection("users").document(auth.currentUser!!.uid).get().addOnSuccessListener {
+                                    var user = it.toObject(User::class.java)
+                                    if(user != null){
+                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                            notificationChannel = NotificationChannel(channelId,description,NotificationManager.IMPORTANCE_HIGH)
+                                            notificationChannel.enableLights(true)
+                                            notificationChannel.lightColor = Color.GREEN
+                                            notificationChannel.enableVibration(false)
+                                            notificationManager.createNotificationChannel(notificationChannel)
+
+                                            builder = Notification.Builder(context,channelId)
+                                                .setContentTitle("KZkin Notification")
+                                                .setContentText(user.name + " liked your review")
+                                                .setSmallIcon(R.mipmap.ic_logo_foreground)
+                                                .setLargeIcon(BitmapFactory.decodeResource(context.resources,R.mipmap.ic_logo_foreground))
+//                                .setContentIntent(pendingIntent)
+                                        }else{
+
+                                            builder = Notification.Builder(context)
+                                                .setContentTitle("KZkin Notification")
+                                                .setContentText(user.name + " liked your review")
+                                                .setSmallIcon(R.mipmap.ic_logo_foreground)
+                                                .setLargeIcon(BitmapFactory.decodeResource(context.resources,R.mipmap.ic_logo_foreground))
+//                                .setContentIntent(pendingIntent)
+                                        }
+                                        notificationManager.notify(1234,builder.build())
+                                    }
+                                }
 
                             }else{
                                 val like = task.result.documents[0]

@@ -10,9 +10,14 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import edu.bluejack21_2.KZkin.R
+import edu.bluejack21_2.KZkin.activity.ProductDetailAdminActivity
 import edu.bluejack21_2.KZkin.activity.ProductDetailUserActivity
 import edu.bluejack21_2.KZkin.model.Product
+import edu.bluejack21_2.KZkin.model.User
 
 
 class ProductAdapter(private val Context: Any) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -54,16 +59,33 @@ class ProductAdapter(private val Context: Any) : RecyclerView.Adapter<RecyclerVi
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val newList = productList?.get(position)
+        val db = Firebase.firestore
+        val auth = Firebase.auth
 
         when(holder) {
             is ProductViewHolder -> {
                 holder.binding(productList!!.get(position))
                 holder.itemView.setOnClickListener{
-                    var intent = Intent(it.context, ProductDetailUserActivity::class.java)
-                    intent.putExtra("id", productList!!.get(position).id)
-                    it.context.startActivities(arrayOf(intent))
+                    db.collection("users").document(auth.currentUser!!.uid).get().addOnSuccessListener { document->
+                        var user = document.toObject(User::class.java)
+                        if(user !=  null){
+                            Log.e("ROLE", user.role.toString())
+                            if (user?.role.equals("admin")){
+                                var intent = Intent(it.context, ProductDetailAdminActivity::class.java)
+                                intent.putExtra("id", productList!!.get(position).id)
+                                it.context.startActivities(arrayOf(intent))
+                            }else{
+                                var intent = Intent(it.context, ProductDetailUserActivity::class.java)
+                                intent.putExtra("id", productList!!.get(position).id)
+                                it.context.startActivities(arrayOf(intent))
+                            }
+                        }
+                    }
+
                 }
             }
         }
     }
+
+
 }

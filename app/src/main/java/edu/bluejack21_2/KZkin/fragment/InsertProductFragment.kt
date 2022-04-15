@@ -66,8 +66,8 @@ class InsertProductFragment : Fragment() {
 
         val buttonSubmit = requireView().findViewById<Button>(R.id.buttonSubmitInsertProduct)
         val inputProductName = requireView().findViewById<TextInputLayout>(R.id.inputInsertProductName)
-        val inputProductBrand = requireView().findViewById<TextInputLayout>(R.id.inputFilterAge)
-        val inputProductCategory = requireView().findViewById<TextInputLayout>(R.id.inputFilterSkinType)
+        val inputProductBrand = requireView().findViewById<TextInputLayout>(R.id.inputInsertProductBrand)
+        val inputProductCategory = requireView().findViewById<TextInputLayout>(R.id.inputInsertProductCategory)
         val inputProductDescription = requireView().findViewById<TextInputLayout>(R.id.inputInsertProductDescription)
         val buttonProductImage = requireView().findViewById<Button>(R.id.buttonInsertProductImage)
 
@@ -98,11 +98,11 @@ class InsertProductFragment : Fragment() {
                 db.collection("products").add(product)
                     .addOnSuccessListener { documentReference ->
                         Toast.makeText(requireContext(), getString(R.string.succ_submit), Toast.LENGTH_SHORT).show()
-//                        val goToNextActivity = Intent(
-//                            applicationContext,
-//                            Home::class.java
-//                        )
-//                        startActivity(goToNextActivity)
+                        val goToNextActivity = Intent(
+                            context,
+                            HomeFragment::class.java
+                        )
+                        startActivity(goToNextActivity)
                     }
                     .addOnFailureListener { e ->
                         Log.w("hi", "Error adding document", e)

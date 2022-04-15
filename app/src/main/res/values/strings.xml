@@ -2,6 +2,8 @@
     <string name="app_name">KZkin</string>
     <!-- Product Section-->
     <string name="title_insert_product">Insert Product Form</string>
+    <string name="title_update_product">Update Product Form</string>
+    <string name="label_update_product">Update Product</string>
     <string-array name="product_categories">
         <item>Skincare</item>
         <item>Make Up</item>
@@ -69,9 +71,8 @@
     <string name="err_regis">Failed register account</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="tab_detail">Detail</string>
-    <string name="tab_review">Review</string>
-    <string name="tab_update">Update</string>
+    <string name="tab_profile">Profile</string>
+    <string name="tab_setting">Setting</string>
     <!--    Review Section-->
     <string name="label_review">Review</string>
     <string name="label_add_review">Add Review</string>
@@ -92,4 +93,17 @@
         <item>2</item>
         <item>1</item>
     </string-array>
+    <string name="label_update_profile">Update Profile</string>
+    <string name="label_logout">Logout</string>
+    <string name="label_delete_account">Delete Account</string>
+    <string name="label_font_size">Font Size</string>
+    <string name="label_setting_notif">Allow Notifications</string>
+    <string name="total_likes">Total Likes</string>
+    <string name="total_review">Created Review</string>
+    <string name="title_update_profile">Update Profile</string>
+    <string name="title_notificiation">Notification</string>
+    <string name="notif_desc">liked your review</string>
+    <string name="title_notif">KZkin Notification</string>
+    <string name="large">Large</string>
+    <string name="enable">Enable</string>
 </resources>

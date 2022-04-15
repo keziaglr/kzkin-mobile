@@ -154,7 +154,7 @@ class HomeFragment : Fragment() {
             }
         }
 
-        temp.limit(index.toLong()).get()
+        temp.get()
             .addOnSuccessListener { result ->
                 productArrayList!!.clear()
                 for (document in result) {
@@ -162,9 +162,19 @@ class HomeFragment : Fragment() {
                     productArrayList!!.add(product)
                 }
 
+                if(productArrayList!!.size >= 5){
+                    for (i in tempList!!.size until index){
+                        tempList!!.add(productArrayList!!.get(i))
+                    }
+                }else{
+                    for(product in productArrayList!!){
+                        tempList!!.add(product)
+                    }
+                }
+
                 Handler().postDelayed({
-                    productAdapter!!.submitList(productArrayList!!)
-                }, 5000)
+                    productAdapter!!.submitList(tempList!!)
+                }, 7000)
             }
             .addOnFailureListener { exception ->
                 Log.d("hi", "Error getting documents: ", exception) }
@@ -212,7 +222,7 @@ class HomeFragment : Fragment() {
                     if ((vItem + lItem) == count) {
 
                         Log.e("INDEX", index.toString())
-                        if (index <= productArrayList!!.size) {
+                        if (index < productArrayList!!.size) {
                             index++
                         }
                         getALlProduct()

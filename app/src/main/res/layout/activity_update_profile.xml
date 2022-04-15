@@ -11,15 +11,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#F8EDEB"
-        tools:context=".fragment.InsertProductFragment">
+        tools:context=".activity.UpdateProfileActivity">
 
         <TextView
-            android:id="@+id/titleInsertProductForm"
+            android:id="@+id/titleUpdateProfile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="52dp"
             android:fontFamily="@font/poppins_bold"
-            android:text="@string/title_insert_product"
+            android:text="@string/title_update_profile"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textColor="#000000"
             android:textSize="24sp"
@@ -28,18 +28,18 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/inputInsertProductName"
+            android:id="@+id/inputUpdateUserName"
             android:layout_width="289dp"
             android:layout_height="64dp"
             android:layout_marginTop="40dp"
             android:ems="10"
             android:fontFamily="@font/poppins"
-            android:hint="@string/label_product_name"
+            android:hint="@string/label_name"
             android:inputType="textPersonName"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/titleInsertProductForm"
+            app:layout_constraintTop_toBottomOf="@+id/titleUpdateProfile"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             >
 
@@ -51,41 +51,56 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/inputInsertProductBrand"
+            android:id="@+id/inputUpdatePhoneNumber"
             android:layout_width="289dp"
             android:layout_height="64dp"
             android:layout_marginTop="35dp"
             android:ems="10"
             android:fontFamily="@font/poppins"
-            android:inputType="textPersonName"
-            android:hint="@string/label_product_brand"
+            android:inputType="number"
+            android:hint="@string/label_phone_number"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            app:layout_constraintTop_toBottomOf="@+id/inputInsertProductName">
+            app:layout_constraintTop_toBottomOf="@+id/inputUpdateUserName">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins"
+                android:inputType="number"
                 android:textSize="14sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <Button
+            android:id="@+id/buttonDOBUpdate"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
+            android:layout_width="289dp"
+            android:layout_height="64dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="32dp"
+            android:fontFamily="@font/poppins"
+            android:text="@string/label_dob"
+            app:icon="@drawable/ic_date"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/inputUpdatePhoneNumber" />
+
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/inputInsertProductCategory"
+            android:id="@+id/inputUpdateSkinType"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="289dp"
             android:layout_height="64dp"
             android:layout_marginTop="35dp"
-            android:hint="@string/label_product_category"
+            android:hint="@string/label_skin_type"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/inputInsertProductBrand"
+            app:layout_constraintTop_toBottomOf="@+id/buttonDOBUpdate"
             >
-
             <AutoCompleteTextView
-                android:id="@+id/autoCompleteProductCategoryTextView"
+                android:id="@+id/autoCompleteSkinTypeTextViewRegister2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -95,32 +110,31 @@
                 android:textSize="14sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
+
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/inputInsertProductDescription"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:id="@+id/inputUpdateGender"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="289dp"
             android:layout_height="64dp"
-            android:layout_marginTop="32dp"
-            android:ems="10"
-            android:fontFamily="@font/poppins"
-            android:gravity="start|top"
-            android:hint="@string/label_product_description"
-            android:inputType="textMultiLine"
-            android:textColor="#000000"
-            android:textSize="14sp"
+            android:layout_marginTop="35dp"
+            android:hint="@string/label_gender"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/inputInsertProductCategory">
-
-            <com.google.android.material.textfield.TextInputEditText
+            app:layout_constraintTop_toBottomOf="@+id/inputUpdateSkinType"
+            >
+            <AutoCompleteTextView
+                android:id="@+id/autoCompleteGenderTextViewRegister2"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:fontFamily="@font/poppins"
+                android:inputType="none"
+                android:textColor="#000000"
                 android:textSize="14sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:id="@+id/buttonInsertProductImage"
+            android:id="@+id/buttonUpdateUserImage"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
             android:layout_width="289dp"
             android:layout_height="64dp"
@@ -132,10 +146,11 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.496"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/inputInsertProductDescription" />
+            app:layout_constraintTop_toBottomOf="@+id/inputUpdateGender" />
+
 
         <Button
-            android:id="@+id/buttonSubmitInsertProduct"
+            android:id="@+id/buttonSubmitUpdateProfile"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
             android:layout_centerHorizontal="true"
@@ -144,11 +159,9 @@
             android:fontFamily="@font/poppins_bold"
             android:text="@string/label_submit"
             android:textColor="@android:color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/buttonInsertProductImage"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toBottomOf="@+id/buttonUpdateUserImage" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
