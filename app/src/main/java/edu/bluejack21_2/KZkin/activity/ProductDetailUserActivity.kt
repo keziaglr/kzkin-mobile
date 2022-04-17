@@ -94,6 +94,8 @@ class ProductDetailUserActivity : AppCompatActivity(){
             btnInsertReview.setOnClickListener{
                 if(user!!.dob == null || user.skinType == null){
                     Toast.makeText(this, getString(R.string.err_update_profile), Toast.LENGTH_LONG).show()
+                    var intent = Intent(this, UpdateProfileActivity::class.java)
+                    startActivity(intent)
                 }else{
                     var intent = Intent(this, InsertReviewActivity::class.java)
                     intent.putExtra("id", id)

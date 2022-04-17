@@ -1,5 +1,6 @@
 package edu.bluejack21_2.KZkin.fragment
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -15,6 +16,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import edu.bluejack21_2.KZkin.R
+import edu.bluejack21_2.KZkin.activity.LoginActivity
 import edu.bluejack21_2.KZkin.model.User
 
 
@@ -98,6 +100,9 @@ class SettingFragment : Fragment() {
                     }
                 }
             }
+            auth.currentUser!!.delete()
+            var intent = Intent(context, LoginActivity::class.java)
+            startActivity(intent)
 
 //            var appSettingPreferences = context.getSharedPreferences("", 0)
 //            isLarge = appSettingPreferences.getBoolean(GLOBALS.SETTINGS_LARGE_KEY, false)

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">KZkin</string>
+    <!-- Product Section-->
+    <string name="title_insert_product">Form Menambahkan Produk</string>
+    <string name="title_update_product">Form Memperbaharui Produk</string>
+    <string name="label_update_product">Perbarui Produk</string>
+    <string-array name="product_categories">
+        <item>Perawatan Kulit</item>
+        <item>Dandan</item>
+        <item>Perawatan Rambut</item>
+        <item>Wewangian</item>
+    </string-array>
+    <string-array name="product_sort">
+        <item>Produk Terlama - Terbaru</item>
+        <item>Produk Terbaru - Terlama</item>
+        <item>Penilaian Tertinggi - Terendah</item>
+        <item>Penilaian Terendah - Tertinggi</item>
+    </string-array>
+    <string name="label_product_name">Nama Produk</string>
+    <string name="label_product_brand">Merek Produk</string>
+    <string name="label_product_category">Kategori Produk</string>
+    <string name="label_product_description">Deskripsi Produk</string>
+    <string name="label_image">Pilih Gambar</string>
+    <string name="label_date">Pilih Tanggal</string>
+    <string name="label_submit">Kirim</string>
+    <string name="title_home">Rumah</string>
+    <string name="subtitle_hottest_product">Produk Terpanas</string>
+    <string name="subtitle_products">Produk</string>
+    <string name="sort">Sortir</string>
+    <string name="filter">Saring</string>
+    <string name="err_field_empty">Semua kolom harus diisi</string>
+    <string name="err_desc">Deskripsi harus lebih dari 10 karakter</string>
+    <string name="succ_img">Berhasil Mengunggah Gambar</string>
+    <string name="err_img">Gagal Mengunggah Gambar</string>
+    <string name="succ_submit">Berhasil mengirimkan data</string>
+    <string name="ok">Ok</string>
+    <string name="cancel">Batal</string>
+    <!--    User Section-->
+    <string name="title_register">Daftar</string>
+    <string name="title_login">Masuk</string>
+    <string name="link_register">Tidak memiliki akun? Daftar</string>
+    <string name="link_login">Sudah punya akun? Masuk</string>
+    <string name="label_or">Atau</string>
+    <string name="label_login_google">Masuk dengan Google</string>
+    <string name="label_name">Nama</string>
+    <string name="label_password">Kata Sandi</string>
+    <string name="label_phone_number">Nomor Telepon</string>
+    <string name="label_email">Email</string>
+    <string name="label_dob">Tanggal Lahir</string>
+    <string name="label_skin_type">Jenis Kulit</string>
+    <string name="label_gender">Jenis Kelamin</string>
+    <string-array name="skin_type">
+        <item>Kulit Berminyak</item>
+        <item>Kulit Kering</item>
+        <item>Kulit Normal</item>
+        <item>Kulit Kombinasi</item>
+    </string-array>
+    <string-array name="gender">
+        <item>Perempuan</item>
+        <item>Laki-laki</item>
+    </string-array>
+    <string name="err_name">Nama harus lebih dari 5 karakter</string>
+    <string name="err_pass">Kata sandi harus lebih dari 8 karakter</string>
+    <string name="err_phone">Nomor Telepon harus lebih dari 12 karakter</string>
+    <string name="err_email_format">Format email salah</string>
+    <string name="err_age">Usia harus lebih dari 17</string>
+    <string name="err_email_unique">Email harus unik</string>
+    <string name="succ_regis">Berhasil mendaftarkan akun</string>
+    <string name="succ_login">Berhasil masuk</string>
+    <string name="err_login">Akun tidak berlaku</string>
+    <string name="err_regis">Gagal mendaftarkan akun</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="tab_profile">Profil</string>
+    <string name="tab_setting">Pengaturan</string>
+    <!--    Review Section-->
+    <string name="label_review">Ulasan</string>
+    <string name="label_add_review">Menambahkan Ulasan</string>
+    <string name="title_insert_review">Menambahkan Ulasan</string>
+    <string name="label_rating">Penilaian</string>
+    <string name="err_update_profile">Harap perbarui profil Anda</string>
+    <string name="title_update_review">Perbarui Ulasan</string>
+    <string name="succ_delete">Berhasil Menghapus Data</string>
+    <string name="title_filter">Saring Ulasan</string>
+    <string name="label_filter_most_liked">Ulasan Paling Disukai</string>
+    <string name="label_filter_skin_type">Jenis Kulit</string>
+    <string name="label_filter_age">Umur</string>
+    <string name="label_reset">Mengatur ulang</string>
+    <string-array name="label_rating">
+        <item>5</item>
+        <item>4</item>
+        <item>3</item>
+        <item>2</item>
+        <item>1</item>
+    </string-array>
+    <string name="label_update_profile">Perbarui Profil</string>
+    <string name="label_logout">Keluar</string>
+    <string name="label_delete_account">Menghapus Akun</string>
+    <string name="label_font_size">Ukuran Font</string>
+    <string name="label_setting_notif">Izinkan Pemberitahuan</string>
+    <string name="total_likes">Total Suka</string>
+    <string name="total_review">Ulasan yang Dibuat</string>
+    <string name="title_update_profile">Perbarui Profil</string>
+    <string name="title_notificiation">Pemberitahuan</string>
+    <string name="notif_desc">menyukai ulasan Anda</string>
+    <string name="title_notif">Pemberitahuan KZkin</string>
+    <string name="large">Besar</string>
+    <string name="enable">Aktifkan</string>
+</resources>
