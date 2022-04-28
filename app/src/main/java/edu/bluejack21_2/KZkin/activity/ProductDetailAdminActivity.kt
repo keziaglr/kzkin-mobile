@@ -32,6 +32,7 @@ class ProductDetailAdminActivity : AppCompatActivity() {
                         var brand = findViewById<TextView>(R.id.textProductDetailBrand2)
                         var name = findViewById<TextView>(R.id.textProductDetailName2)
                         var desc = findViewById<TextView>(R.id.textProductDetailDesc2)
+                        var rating = findViewById<TextView>(R.id.viewProductDetailRating2)
 
                         val requestOption = RequestOptions()
                             .placeholder(R.drawable.ic_launcher_background)
@@ -47,6 +48,7 @@ class ProductDetailAdminActivity : AppCompatActivity() {
                         brand.setText(product!!.brand)
                         name.setText(product!!.name)
                         desc.setText(product!!.description)
+                        rating.setText(String.format("%.1f", product.rating))
                     }
 
                 }

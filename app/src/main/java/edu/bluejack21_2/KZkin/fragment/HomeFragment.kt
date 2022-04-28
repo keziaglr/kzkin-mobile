@@ -69,8 +69,8 @@ class HomeFragment : Fragment() {
         hottestProductArrayList = ArrayList()
         productAdapter = ProductAdapter(this)
         productAdapter1 = ProductAdapter(this)
-/*        getALlProduct()
-        getHottestProducts()*/
+       getALlProduct()
+        getHottestProducts()
         linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         productRV!!.setLayoutManager(linearLayoutManager)
         productRV!!.setAdapter(productAdapter)
@@ -154,7 +154,7 @@ class HomeFragment : Fragment() {
             }
         }
 
-        temp.get()
+        temp.limit(index.toLong()).get()
             .addOnSuccessListener { result ->
                 productArrayList!!.clear()
                 for (document in result) {
@@ -162,18 +162,18 @@ class HomeFragment : Fragment() {
                     productArrayList!!.add(product)
                 }
 
-                if(productArrayList!!.size >= 5){
-                    for (i in tempList!!.size until index){
-                        tempList!!.add(productArrayList!!.get(i))
-                    }
-                }else{
-                    for(product in productArrayList!!){
-                        tempList!!.add(product)
-                    }
-                }
+//                if(productArrayList!!.size >= 5){
+//                    for (i in tempList!!.size until index){
+//                        tempList!!.add(productArrayList!!.get(i))
+//                    }
+//                }else{
+//                    for(product in productArrayList!!){
+//                        tempList!!.add(product)
+//                    }
+//                }
 
                 Handler().postDelayed({
-                    productAdapter!!.submitList(tempList!!)
+                    productAdapter!!.submitList(productArrayList!!)
                 }, 7000)
             }
             .addOnFailureListener { exception ->
@@ -181,7 +181,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun getHottestProducts(){
-        db.collection("products").orderBy("reviews", Query.Direction.DESCENDING).limit(3).get()
+        db.collection("products").whereGreaterThan("reviews", 0).orderBy("reviews", Query.Direction.DESCENDING).limit(3).get()
             .addOnSuccessListener { result ->
                 hottestProductArrayList!!.clear()
                 for (document in result) {
@@ -222,7 +222,8 @@ class HomeFragment : Fragment() {
                     if ((vItem + lItem) == count) {
 
                         Log.e("INDEX", index.toString())
-                        if (index < productArrayList!!.size) {
+                        Log.e("CHILD", productAdapter!!.itemCount.toString())
+                        if (index <= productAdapter!!.itemCount) {
                             index++
                         }
                         getALlProduct()

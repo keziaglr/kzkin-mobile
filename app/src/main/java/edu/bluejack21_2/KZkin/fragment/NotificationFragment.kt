@@ -90,13 +90,14 @@ class NotificationFragment : Fragment() {
     }
 
     private fun getNotifications() {
-        db.collection("likes").orderBy("createdAt", Query.Direction.DESCENDING).limit(3).get()
+        db.collection("likes").orderBy("createdAt", Query.Direction.DESCENDING).limit(10).get()
             .addOnSuccessListener { result ->
+                var like = result.toObjects(Like::class.java)
                 notificationArrayList!!.clear()
                 tempList!!.clear()
                 for (document in result) {
                     val like = document.toObject(Like::class.java)
-                    if (checkReview(like.reviewId.toString())) {
+                    if (checkReview(like.reviewId.toString()) && like.userId != auth.currentUser!!.uid) {
                         notificationArrayList!!.add(like)
                     }
                 }

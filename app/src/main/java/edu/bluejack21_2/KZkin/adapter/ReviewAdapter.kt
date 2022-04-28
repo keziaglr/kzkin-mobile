@@ -81,7 +81,22 @@ class ReviewAdapter (private val Contextt: Any) : RecyclerView.Adapter<RecyclerV
                     val yearNumber = DateFormat.format("yyyy", user!!.dob)
                     val dayNumber = DateFormat.format("dd", user!!.dob)
                     var age =  getAge(Integer.parseInt(yearNumber.toString()) , Integer.parseInt(monthNumber.toString()), Integer.parseInt(dayNumber.toString()))
-                    userAge?.setText(age.toString() + " years old, " + user!!.skinType)
+                    var years = itemView.context.getResources().getString(R.string.old)
+                    var skin = ""
+                    if(years.equals("tahun")){
+                        if(user!!.skinType.equals("Oily Skin")){
+                            skin = "Kulit Berminyak"
+                        }else if(user!!.skinType.equals("Combination Skin")){
+                            skin = "Kulit Kombinasi"
+                        }else if(user!!.skinType.equals("Dry Skin")){
+                            skin = "Kulit Kering"
+                        }else if(user!!.skinType.equals("Normal Skin")){
+                            skin = "Kulit Normal"
+                        }
+                    }else{
+                        skin = user!!.skinType.toString()
+                    }
+                    userAge?.setText(age.toString() + " " + years + ", " + skin)
                 }else{
                     userAge?.setText("unknown")
                 }
@@ -187,6 +202,7 @@ class ReviewAdapter (private val Contextt: Any) : RecyclerView.Adapter<RecyclerV
                                     }
                                 }
                                 Toast.makeText(it.context, R.string.succ_delete, Toast.LENGTH_SHORT).show()
+                                notifyDataSetChanged()
                             }
                         }
 
@@ -207,6 +223,7 @@ class ReviewAdapter (private val Contextt: Any) : RecyclerView.Adapter<RecyclerV
                         if (task.isSuccessful){
                             if(task.result.isEmpty){
                                 holder.favBtn.setImageResource(R.drawable.ic_favorite);
+                                notifyDataSetChanged()
                                 var like = Like("", auth.currentUser!!.uid, reviewList!!.get(position).id, Timestamp.now())
                                 db.collection("likes").add(like)
                                 var builder : Notification.Builder
@@ -221,38 +238,42 @@ class ReviewAdapter (private val Contextt: Any) : RecyclerView.Adapter<RecyclerV
                                 db.collection("users").document(auth.currentUser!!.uid).get().addOnSuccessListener {
                                     var user = it.toObject(User::class.java)
                                     if(user != null){
-                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                                            notificationChannel = NotificationChannel(channelId,description,NotificationManager.IMPORTANCE_HIGH)
-                                            notificationChannel.enableLights(true)
-                                            notificationChannel.lightColor = Color.GREEN
-                                            notificationChannel.enableVibration(false)
-                                            notificationManager.createNotificationChannel(notificationChannel)
+                                        if(reviewList!!.get(position).userId != auth.currentUser!!.uid){
+                                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                                notificationChannel = NotificationChannel(channelId,description,NotificationManager.IMPORTANCE_HIGH)
+                                                notificationChannel.enableLights(true)
+                                                notificationChannel.lightColor = Color.GREEN
+                                                notificationChannel.enableVibration(false)
+                                                notificationManager.createNotificationChannel(notificationChannel)
 
-                                            builder = Notification.Builder(context,channelId)
-                                                .setContentTitle("KZkin Notification")
-                                                .setContentText(user.name + " liked your review")
-                                                .setSmallIcon(R.mipmap.ic_logo_foreground)
-                                                .setLargeIcon(BitmapFactory.decodeResource(context.resources,R.mipmap.ic_logo_foreground))
+                                                builder = Notification.Builder(context,channelId)
+                                                    .setContentTitle("KZkin Notification")
+                                                    .setContentText(user.name + " liked your review")
+                                                    .setSmallIcon(R.mipmap.ic_logo_foreground)
+                                                    .setLargeIcon(BitmapFactory.decodeResource(context.resources,R.mipmap.ic_logo_foreground))
 //                                .setContentIntent(pendingIntent)
-                                        }else{
+                                            }else{
 
-                                            builder = Notification.Builder(context)
-                                                .setContentTitle("KZkin Notification")
-                                                .setContentText(user.name + " liked your review")
-                                                .setSmallIcon(R.mipmap.ic_logo_foreground)
-                                                .setLargeIcon(BitmapFactory.decodeResource(context.resources,R.mipmap.ic_logo_foreground))
+                                                builder = Notification.Builder(context)
+                                                    .setContentTitle("KZkin Notification")
+                                                    .setContentText(user.name + " liked your review")
+                                                    .setSmallIcon(R.mipmap.ic_logo_foreground)
+                                                    .setLargeIcon(BitmapFactory.decodeResource(context.resources,R.mipmap.ic_logo_foreground))
 //                                .setContentIntent(pendingIntent)
+                                            }
+                                            notificationManager.notify(1234,builder.build())
                                         }
-                                        notificationManager.notify(1234,builder.build())
                                     }
                                 }
 
                             }else{
                                 val like = task.result.documents[0]
-                                like.toObject(Like::class.java)
-                                holder.favBtn.setImageResource(R.drawable.ic_unfavorite);
-                                db.collection("likes").document(like.id).delete()
 
+                                like.toObject(Like::class.java)
+                                holder.favBtn.setImageResource(R.drawable.ic_unfavorite)
+
+                                db.collection("likes").document(like.id).delete()
+                                notifyDataSetChanged()
                             }
                         }
                     }

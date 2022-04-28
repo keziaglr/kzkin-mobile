@@ -65,82 +65,82 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/subtitleTotalLike" />
 
-    <Switch
-        android:id="@+id/switchFontSize"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/poppins"
-        android:text="@string/large"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.05"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/subtitleFontSize" />
+<!--    <Switch-->
+<!--        android:id="@+id/switchFontSize"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="8dp"-->
+<!--        android:fontFamily="@font/poppins"-->
+<!--        android:text="@string/large"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.05"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/subtitleFontSize" />-->
 
-        <TextView
-            android:id="@+id/subtitleFontSize"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="76dp"
-            android:fontFamily="@font/poppins_bold"
-            android:text="@string/label_font_size"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+<!--        <TextView-->
+<!--            android:id="@+id/subtitleFontSize"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="76dp"-->
+<!--            android:fontFamily="@font/poppins_bold"-->
+<!--            android:text="@string/label_font_size"-->
+<!--            android:textAppearance="@style/TextAppearance.AppCompat.Body1"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintHorizontal_bias="0.047"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/viewCreatedReview" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/titleEnableNotification"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="36dp"-->
+<!--            android:fontFamily="@font/poppins_bold"-->
+<!--            android:text="@string/label_setting_notif"-->
+<!--            android:textAppearance="@style/TextAppearance.AppCompat.Body1"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintHorizontal_bias="0.047"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/switchFontSize" />-->
+
+<!--    <Switch-->
+<!--        android:id="@+id/changeNotification"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="8dp"-->
+<!--        android:text="@string/enable"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.049"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/titleEnableNotification" />-->
+
+
+        <Button
+            android:id="@+id/buttonDeleteAccount"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
+            android:layout_width="289dp"
+            android:layout_height="64dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="56dp"
+            android:fontFamily="@font/poppins"
+            android:text="@string/label_delete_account"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.047"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/viewCreatedReview" />
+            app:layout_constraintTop_toBottomOf="@id/viewTotalLike"
+            app:layout_constraintVertical_bias="0.879" />
 
-        <TextView
-            android:id="@+id/titleEnableNotification"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="36dp"
-            android:fontFamily="@font/poppins_bold"
-            android:text="@string/label_setting_notif"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.047"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/switchFontSize" />
-
-    <Switch
-        android:id="@+id/changeNotification"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/enable"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.049"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titleEnableNotification" />
-
-
-    <Button
-        android:id="@+id/buttonDeleteAccount"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
-        android:layout_width="289dp"
-        android:layout_height="64dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="56dp"
-        android:fontFamily="@font/poppins"
-        android:text="@string/label_delete_account"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/changeNotification"
-        app:layout_constraintVertical_bias="0.076" />
-
-    <Button
-        android:id="@+id/buttonSubmitSetting"
-        android:layout_width="289dp"
-        android:layout_height="64dp"
-        android:layout_marginBottom="132dp"
-        android:text="@string/label_submit"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonDeleteAccount"
-        app:layout_constraintVertical_bias="1.0" />
+        <!--    <Button-->
+<!--        android:id="@+id/buttonSubmitSetting"-->
+<!--        android:layout_width="289dp"-->
+<!--        android:layout_height="64dp"-->
+<!--        android:layout_marginBottom="132dp"-->
+<!--        android:text="@string/label_submit"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/buttonDeleteAccount"-->
+<!--        app:layout_constraintVertical_bias="1.0" />-->
 
 
 

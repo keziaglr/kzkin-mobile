@@ -28,6 +28,7 @@
         android:layout_width="334dp"
         android:layout_height="334dp"
         android:layout_marginTop="4dp"
+        android:scaleType="fitXY"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
@@ -47,6 +48,23 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgProductDetail" />
+
+    <TextView
+        android:id="@+id/viewProductDetailRating"
+        android:layout_width="65dp"
+        android:layout_height="17dp"
+        android:layout_marginStart="164dp"
+        android:layout_marginTop="16dp"
+        android:drawablePadding="1dp"
+        android:fontFamily="@font/poppins"
+        android:textColor="@color/black"
+        android:text="5"
+        android:textSize="14sp"
+        app:drawableStartCompat="@drawable/ic_star"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/textProductDetailBrand"
         app:layout_constraintTop_toBottomOf="@+id/imgProductDetail" />
 
     <TextView

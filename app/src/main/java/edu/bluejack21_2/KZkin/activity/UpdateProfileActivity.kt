@@ -92,7 +92,7 @@ class UpdateProfileActivity : AppCompatActivity() {
                     buttonRegister.setOnClickListener {
                         val name = inputName.editText!!.text.toString()
                         val phoneNumber = inputPhoneNumber.editText!!.text.toString()
-                        val skinType = inputSkinType.editText!!.text.toString()
+                        var skinType = inputSkinType.editText!!.text.toString()
                         val gender = inputGender.editText!!.text.toString()
 
                         if (userDOB == null || name.isEmpty() || phoneNumber.isEmpty() || skinType.isEmpty() || gender.isEmpty() || profileImage!!.isEmpty()) {
@@ -126,6 +126,21 @@ class UpdateProfileActivity : AppCompatActivity() {
                                     Toast.LENGTH_SHORT
                                 ).show()
                             } else {
+                                if(skinType.equals("Kulit Berminyak")){
+                                    skinType = "Oily Skin"
+                                }else if(skinType.equals("Kulit Kombinasi")){
+                                    skinType = "Combination Skin"
+                                }else if(skinType.equals("Kulit Kering")){
+                                    skinType = "Dry Skin"
+                                }else if(skinType.equals("Kulit Normal")){
+                                    skinType = "Normal Skin"
+                                }
+
+                                if(gender.equals("Perempuan")){
+                                    skinType = "Female"
+                                }else  if(gender.equals("Laki-laki")){
+                                    skinType = "Male"
+                                }
                                 val user = User(
                                     "",
                                     name,

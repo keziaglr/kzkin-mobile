@@ -33,7 +33,11 @@
             android:id="@+id/viewPosterImage"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_margin="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:scaleType="fitXY"
             android:contentDescription="@string/app_name"
             android:padding="5dp"
             android:src="@drawable/ic_home" />
@@ -69,7 +73,7 @@
             android:textSize="14sp" />
 
         <TextView
-            android:id="@+id/viewReviewRating"
+            android:id="@+id/viewProductRating"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/viewPosterAge"

@@ -31,7 +31,7 @@ class MainActivityAdmin : AppCompatActivity() {
         }
     }
 
-    private fun replacementFragment(fragment : Fragment){
+     fun replacementFragment(fragment : Fragment){
         if(fragment != null){
             val transaction = supportFragmentManager.beginTransaction()
             transaction.replace(R.id.frame_container2, fragment)

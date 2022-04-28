@@ -7,7 +7,7 @@
     <string name="label_update_product">Perbarui Produk</string>
     <string-array name="product_categories">
         <item>Perawatan Kulit</item>
-        <item>Dandan</item>
+        <item>Kosmetik</item>
         <item>Perawatan Rambut</item>
         <item>Wewangian</item>
     </string-array>
@@ -24,7 +24,7 @@
     <string name="label_image">Pilih Gambar</string>
     <string name="label_date">Pilih Tanggal</string>
     <string name="label_submit">Kirim</string>
-    <string name="title_home">Rumah</string>
+    <string name="title_home">Beranda</string>
     <string name="subtitle_hottest_product">Produk Terpanas</string>
     <string name="subtitle_products">Produk</string>
     <string name="sort">Sortir</string>
@@ -50,6 +50,7 @@
     <string name="label_dob">Tanggal Lahir</string>
     <string name="label_skin_type">Jenis Kulit</string>
     <string name="label_gender">Jenis Kelamin</string>
+    <string name="add">Tambah</string>
     <string-array name="skin_type">
         <item>Kulit Berminyak</item>
         <item>Kulit Kering</item>
@@ -107,4 +108,5 @@
     <string name="title_notif">Pemberitahuan KZkin</string>
     <string name="large">Besar</string>
     <string name="enable">Aktifkan</string>
+    <string name="old">tahun</string>
 </resources>

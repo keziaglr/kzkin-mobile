@@ -49,6 +49,7 @@ class ProductDetailUserActivity : AppCompatActivity(){
         reviewAdapter = ReviewAdapter(this)
         linearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         reviewRV!!.setLayoutManager(linearLayoutManager)
+        getALlReview()
         reviewRV!!.setAdapter(reviewAdapter)
         reviewRV!!.adapter = reviewAdapter
         reviewAdapter!!.notifyDataSetChanged()
@@ -72,6 +73,7 @@ class ProductDetailUserActivity : AppCompatActivity(){
                     var brand = findViewById<TextView>(R.id.textProductDetailBrand)
                     var name = findViewById<TextView>(R.id.textProductDetailName)
                     var desc = findViewById<TextView>(R.id.textProductDetailDesc)
+                    var rating = findViewById<TextView>(R.id.viewProductDetailRating)
 
                     val requestOption = RequestOptions()
                         .placeholder(R.drawable.ic_launcher_background)
@@ -84,6 +86,7 @@ class ProductDetailUserActivity : AppCompatActivity(){
                     brand.setText(product!!.brand)
                     name.setText(product!!.name)
                     desc.setText(product!!.description)
+                    rating.setText(String.format("%.1f", product.rating))
                 }
 
         }
@@ -110,7 +113,6 @@ class ProductDetailUserActivity : AppCompatActivity(){
             intent.putExtra("id", id)
             startActivity(intent)
         }
-
 
 //        setTab()
     }
@@ -169,41 +171,56 @@ class ProductDetailUserActivity : AppCompatActivity(){
         }
 
         if(intent.extras!!.getString("fLike") != null && intent.extras!!.getString("fLike") == "true"){
-            temp = temp.orderBy("like", Query.Direction.DESCENDING)
+            Log.e("SORTT", "masuk")
+            temp = temp.orderBy("likes", Query.Direction.DESCENDING)
         }
 
         temp.get()
             .addOnSuccessListener { result ->
                 reviewList!!.clear()
-//                tempList.clear()
+
                 for (document in result) {
                     val review = document.toObject(Review::class.java)
                     if(intent.extras!!.getString("fAge") != null && intent.extras!!.getString("fSkin") != null && intent.extras!!.getString("fAge")!!.isEmpty() == false && intent.extras!!.getString("fSkin")!!.isEmpty() == false) {
                         Log.e("FB", "AGE SKIN")
                         if (checkAge(review.userId!!) && checkSkin(review.userId!!)) {
+                            Log.e("ADD", "ADD BY AGE & SKIN" + review.id.toString())
                             reviewList!!.add(review)
                         }
-                    }else if(intent.extras!!.getString("fAge") != null && intent.extras!!.getString("fAge")!!.isEmpty() == false){
+                    }else if(intent.extras!!.getString("fAge") != null && intent.extras!!.getString("fAge")!!.isEmpty() == false && intent.extras!!.getString("fAge") != ""){
                         Log.e("FB", "AGE")
-                        if (checkAge(review.userId!!)) {
+                        var fAge = intent.extras!!.getString("fAge")
+                        Log.e("HAI2", "FAGE ${fAge}")
+                        if (checkAge(review.userId!!) == true) {
+                            Log.e("ADD", "ADD BY AGE" + review.id.toString())
                             reviewList!!.add(review)
                         }
                     }else if(intent.extras!!.getString("fSkin") != null && intent.extras!!.getString("fSkin")!!.isEmpty() == false){
                         Log.e("FB", "SKIN")
                         if (checkSkin(review.userId!!)) {
+                            Log.e("ADD", "ADD BY SKIN" + review.id.toString())
                             reviewList!!.add(review)
                         }
                     }else{
+                        Log.e("FB", "ELSEE")
+                        Log.e("ADD", "ADD BY ELSE" + review.id.toString())
                         reviewList!!.add(review)
                     }
                 }
                 Log.e("Review Adapter dipanbgggil", "this")
+                if(reviewList!!.isEmpty() == false){
+                    for(review in reviewList!!){
+                        Log.e("Review List3", review.id.toString())
+                    }
+                }
                 if(reviewList!!.size >= 5){
                     for (i in tempList!!.size until index){
+                        Log.e("Review List1", reviewList!!.get(i).id.toString())
                         tempList.add(reviewList!!.get(i))
                     }
                 }else{
                     for(review in reviewList!!){
+                        Log.e("Review List2", review.id.toString())
                         tempList.add(review)
                     }
                 }
@@ -223,7 +240,9 @@ class ProductDetailUserActivity : AppCompatActivity(){
             val dayNumber = DateFormat.format("dd", user!!.dob)
             var uAge = getAge(Integer.parseInt(yearNumber.toString()) , Integer.parseInt(monthNumber.toString()), Integer.parseInt(dayNumber.toString()))
             var fAge = intent.extras!!.getString("fAge")
-            if(uAge == fAge!!.toInt()){
+            Log.e("PERBANDINGAN", "${uAge} ${fAge}")
+            if(uAge == fAge!!.toInt() && user.id == userId){
+                Log.e("PERBANDINGAN", "TRUEE")
                 return true
             }
         }
@@ -233,7 +252,7 @@ class ProductDetailUserActivity : AppCompatActivity(){
     fun checkSkin(userId: String) : Boolean{
         for (user in userList){
             Log.e("FB", "${user!!.skinType.toString()} ${intent.extras!!.getString("fSkin").toString()}")
-            if(intent.extras!!.getString("fSkin").toString() == user!!.skinType.toString()){
+            if(intent.extras!!.getString("fSkin").toString() == user!!.skinType.toString() && user.id == userId){
                 Log.e("FB TRUE", user!!.skinType.toString())
                 return true
             }

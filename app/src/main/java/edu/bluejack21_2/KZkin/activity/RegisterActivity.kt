@@ -99,7 +99,7 @@ class RegisterActivity : AppCompatActivity() {
             val password = inputPassword.editText!!.text.toString()
             val phoneNumber = inputPhoneNumber.editText!!.text.toString()
             val email = inputEmail.editText!!.text.toString()
-            val skinType = inputSkinType.editText!!.text.toString()
+            var skinType = inputSkinType.editText!!.text.toString()
             val gender = inputGender.editText!!.text.toString()
             val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"
 
@@ -120,6 +120,22 @@ class RegisterActivity : AppCompatActivity() {
                 }else if(getAge(Integer.parseInt(yearNumber.toString()) , Integer.parseInt(monthNumber.toString()), Integer.parseInt(dayNumber.toString()))!! < 17){
                     Toast.makeText(applicationContext, getString(R.string.err_age),Toast.LENGTH_SHORT).show()
                 }else{
+                    if(skinType.equals("Kulit Berminyak")){
+                        skinType = "Oily Skin"
+                    }else if(skinType.equals("Kulit Kombinasi")){
+                        skinType = "Combination Skin"
+                    }else if(skinType.equals("Kulit Kering")){
+                        skinType = "Dry Skin"
+                    }else if(skinType.equals("Kulit Normal")){
+                        skinType = "Normal Skin"
+                    }
+
+                    if(gender.equals("Perempuan")){
+                        skinType = "Female"
+                    }else  if(gender.equals("Laki-laki")){
+                        skinType = "Male"
+                    }
+
                     val user = User("", name, password, phoneNumber, email, userDOB, skinType, gender, profileImage, "user", Timestamp.now(), Timestamp.now())
                     auth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(this) { task ->

@@ -4,15 +4,15 @@
         android:id="@+id/page_1"
         android:enabled="true"
         android:icon="@drawable/ic_home"
-        android:title="Home"/>
+        android:title="@string/title_home"/>
     <item
         android:id="@+id/page_2"
         android:enabled="true"
         android:icon="@drawable/ic_notification"
-        android:title="Notification"/>
+        android:title="@string/title_notificiation"/>
     <item
         android:id="@+id/page_3"
         android:enabled="true"
         android:icon="@drawable/ic_profile"
-        android:title="Profile"/>
+        android:title="@string/tab_profile"/>
 </menu>

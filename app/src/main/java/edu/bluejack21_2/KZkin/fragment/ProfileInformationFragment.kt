@@ -1,17 +1,22 @@
 package edu.bluejack21_2.KZkin.fragment
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.text.format.DateFormat
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.RequiresApi
+import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -72,19 +77,37 @@ class ProfileInformationFragment : Fragment() {
         }
 
         btnLogout.setOnClickListener {
+            Log.e("user now", auth.currentUser?.uid.toString())
+            auth.signOut()
+            val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken("109122604925-vc57vh7nfl1edh697c37b0uudprnlg73.apps.googleusercontent.com")
+                .requestEmail()
+                .build()
+
+            val googleSignInClient = GoogleSignIn.getClient(view.context, gso)
+            googleSignInClient.signOut()
             var intent = Intent(context, LoginActivity::class.java)
             startActivity(intent)
-            auth.signOut()
+            Log.e("user now", auth.currentUser?.uid.toString())
+            this.activity?.finish()
         }
         db.collection("users").document(auth.currentUser!!.uid).get().addOnSuccessListener {
             var user = it.toObject(User::class.java)
             if(user != null){
                 name.setText(user.name)
                 email.setText(user.email)
-                phone.setText(user.phoneNumber)
-                gender.setText(user.gender)
-                skintype.setText(user.skinType)
-                dob.setText(user.dob.toString())
+                if(user.phoneNumber == null) phone.setText("-")
+                else phone.setText(user.phoneNumber)
+                if(user.gender == "") gender.setText("-")
+                else gender.setText(user.gender)
+                if(user.skinType == "") skintype.setText("-")
+                else skintype.setText(user.skinType)
+                if(user.dob != null){
+                    var dob1 = DateFormat.format("dd MMMM yyyy", user.dob).toString()
+                    dob.setText(dob1)
+                }else{
+                    dob.setText("-")
+                }
 
                 val requestOption = RequestOptions()
                     .placeholder(R.drawable.ic_launcher_background)
@@ -98,6 +121,10 @@ class ProfileInformationFragment : Fragment() {
         }
 
         super.onViewCreated(view, savedInstanceState)
+    }
+
+    private fun logout() {
+
     }
 
     companion object {

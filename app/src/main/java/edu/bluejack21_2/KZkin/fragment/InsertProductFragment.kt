@@ -20,6 +20,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import edu.bluejack21_2.KZkin.R
+import edu.bluejack21_2.KZkin.activity.MainActivityAdmin
 import edu.bluejack21_2.KZkin.model.Product
 import java.io.IOException
 import java.util.*
@@ -85,7 +86,7 @@ class InsertProductFragment : Fragment() {
 
             val productName = inputProductName.editText!!.text.toString()
             val productBrand = inputProductBrand.editText!!.text.toString()
-            val productCategory = inputProductCategory.editText!!.text.toString()
+            var productCategory = inputProductCategory.editText!!.text.toString()
             val productDescription = inputProductDescription.editText!!.text.toString()
 
             if (productName.isEmpty() || productBrand.isEmpty() || productCategory.isEmpty() || photoProduct!!.isEmpty()){
@@ -93,16 +94,20 @@ class InsertProductFragment : Fragment() {
             }else if (productDescription.length < 10){
                 Toast.makeText(requireContext(), getString(R.string.err_desc), Toast.LENGTH_LONG).show()
             }else{
+                if(productCategory.equals("Perawatan Kulit")){
+                    productCategory = "Skincare"
+                }else if(productCategory.equals("Kosmetik")){
+                    productCategory = "Make Up"
+                }else if(productCategory.equals("Perawatan Rambut")){
+                    productCategory = "Haircare"
+                }else if(productCategory.equals("Wewangian")){
+                    productCategory = "Fragrances"
+                }
                 val product = Product("", productName, productBrand, productCategory, productDescription,
                     photoProduct!!, 0.0f, 0, Timestamp.now(), Timestamp.now())
                 db.collection("products").add(product)
                     .addOnSuccessListener { documentReference ->
                         Toast.makeText(requireContext(), getString(R.string.succ_submit), Toast.LENGTH_SHORT).show()
-                        val goToNextActivity = Intent(
-                            context,
-                            HomeFragment::class.java
-                        )
-                        startActivity(goToNextActivity)
                     }
                     .addOnFailureListener { e ->
                         Log.w("hi", "Error adding document", e)

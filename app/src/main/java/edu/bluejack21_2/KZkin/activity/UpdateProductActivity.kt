@@ -17,6 +17,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import edu.bluejack21_2.KZkin.R
+import edu.bluejack21_2.KZkin.adapter.ProductAdapter
 import edu.bluejack21_2.KZkin.fragment.HomeFragment
 import edu.bluejack21_2.KZkin.model.Product
 import java.io.IOException
@@ -28,6 +29,7 @@ class UpdateProductActivity : AppCompatActivity() {
     private var storage: FirebaseStorage? = null
     private var storageReference: StorageReference? = null
     private var photoProduct: String? = ""
+    private var productAdapter: ProductAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,7 +73,7 @@ class UpdateProductActivity : AppCompatActivity() {
 
                     val productName = inputProductName.editText!!.text.toString()
                     val productBrand = inputProductBrand.editText!!.text.toString()
-                    val productCategory = inputProductCategory.editText!!.text.toString()
+                    var productCategory = inputProductCategory.editText!!.text.toString()
                     val productDescription = inputProductDescription.editText!!.text.toString()
 
                     if (productName.isEmpty() || productBrand.isEmpty() || productCategory.isEmpty() || photoProduct!!.isEmpty()){
@@ -79,6 +81,17 @@ class UpdateProductActivity : AppCompatActivity() {
                     }else if (productDescription.length < 10){
                         Toast.makeText(this, getString(R.string.err_desc), Toast.LENGTH_LONG).show()
                     }else{
+                        if(productCategory.equals("Perawatan Kulit")){
+                            productCategory = "Skincare"
+                        }else if(productCategory.equals("Kosmetik")){
+                            productCategory = "Make Up"
+                        }else if(productCategory.equals("Perawatan Rambut")){
+                            productCategory = "Haircare"
+                        }else if(productCategory.equals("Wewangian")){
+                            productCategory = "Fragrances"
+                        }
+
+
                         val product = Product(productId, productName, productBrand, productCategory, productDescription,
                             photoProduct!!, prod.rating, prod.reviews, prod!!.createdAt, Timestamp.now())
                         db.collection("products").document(productId).set(product)
@@ -94,7 +107,9 @@ class UpdateProductActivity : AppCompatActivity() {
                             .addOnFailureListener { e ->
                                 Log.w("hi", "Error adding document", e)
                             }
+                        productAdapter!!.notifyDataSetChanged()
                     }
+
 
                 }
             }

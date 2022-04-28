@@ -34,12 +34,24 @@ class FilterReviewActivity : AppCompatActivity() {
         var productId = intent.extras!!.get("id")
         btnSubmit.setOnClickListener{
             var age = inputAge.editText!!.text
-            var skin = inputSkin.editText!!.text
-            var like = mostLiked.isSelected
+            var sk = inputSkin.editText!!.text
+            var skin = sk.toString()
+            var like = mostLiked.isChecked
             var rating = inputRating.editText!!.text
             var intent = Intent(this, ProductDetailUserActivity::class.java)
             intent.putExtra("fAge", age.toString())
-            intent.putExtra("fSkin", skin.toString())
+            if(skin.isNotEmpty() || skin.toString() != ""){
+                if(skin.equals("Kulit Berminyak")){
+                    skin = "Oily Skin"
+                }else if(skin.equals("Kulit Kombinasi")){
+                    skin = "Combination Skin"
+                }else if(skin.equals("Kulit Kering")){
+                    skin = "Dry Skin"
+                }else if(skin.equals("Kulit Normal")){
+                    skin = "Normal Skin"
+                }
+            }
+            intent.putExtra("fSkin", skin)
             intent.putExtra("fLike", like.toString())
             intent.putExtra("fRating", rating.toString())
 

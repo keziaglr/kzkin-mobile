@@ -132,17 +132,17 @@ class LoginActivity : AppCompatActivity() {
         auth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    Log.d("MainActivity", "signInWithCredential:success")
+                    Log.d("LoginActivity", "signInWithCredential:success")
 
                     val docRef =  db.collection("users").document(auth.currentUser!!.uid)
                     var user: User? = null
                     docRef.get()
                         .addOnSuccessListener {  document ->
-                            if(document == null){
+                            if(document.exists()){
+                                user = document.toObject(User::class.java)!!
+                            }else{
                                 user = User("", auth.currentUser!!.displayName, "", auth.currentUser!!.phoneNumber, auth.currentUser!!.email, null, "", "", auth.currentUser!!.photoUrl.toString(), "user", Timestamp.now(), Timestamp.now())
                                 db.collection("users").document(auth.currentUser!!.uid).set(user!!, SetOptions.merge())
-                            }else{
-                                user = document.toObject(User::class.java)!!
                             }
                             Toast.makeText(applicationContext, getString(R.string.succ_login),Toast.LENGTH_SHORT).show()
 

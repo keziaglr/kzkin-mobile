@@ -32,7 +32,7 @@ class ProductAdapter(private val Context: Any) : RecyclerView.Adapter<RecyclerVi
         val productImage: ImageView? = itemView.findViewById(R.id.viewPosterImage)
         val productBrand: TextView? = itemView.findViewById(R.id.viewPosterName)
         val productName: TextView? = itemView.findViewById(R.id.viewPosterAge)
-        val productRating: TextView? = itemView.findViewById(R.id.viewReviewRating)
+        val productRating: TextView? = itemView.findViewById(R.id.viewProductRating)
 
         fun binding(product: Product){
             productName?.setText(product.name)

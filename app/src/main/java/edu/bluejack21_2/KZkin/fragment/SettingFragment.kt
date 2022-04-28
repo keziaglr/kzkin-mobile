@@ -109,23 +109,23 @@ class SettingFragment : Fragment() {
 
         }
 
-        var btnSave = view.findViewById<Button>(R.id.buttonSubmitSetting)
-        var switch = view.findViewById<Switch>(R.id.switchFontSize)
-        btnSave.setOnClickListener {
-            Log.e("SWITCH", switch.isChecked.toString())
-            when (switch.isChecked) {
-                true -> {
-                    val themeID: Int = R.style.Theme_KZkin_FontLarge
-                    requireContext().setTheme(themeID)
-                    Log.e("font", themeID.toString())
-                }
-                else -> {
-                    val themeID: Int = R.style.Theme_KZkin
-                    requireContext().setTheme(themeID)
-                    Log.e("font", themeID.toString())
-                }
-            }
-        }
+//        var btnSave = view.findViewById<Button>(R.id.buttonSubmitSetting)
+//        var switch = view.findViewById<Switch>(R.id.switchFontSize)
+//        btnSave.setOnClickListener {
+//            Log.e("SWITCH", switch.isChecked.toString())
+//            when (switch.isChecked) {
+//                true -> {
+//                    val themeID: Int = R.style.Theme_KZkin_FontLarge
+//                    requireContext().setTheme(themeID)
+//                    Log.e("font", themeID.toString())
+//                }
+//                else -> {
+//                    val themeID: Int = R.style.Theme_KZkin
+//                    requireContext().setTheme(themeID)
+//                    Log.e("font", themeID.toString())
+//                }
+//            }
+//        }
     }
     companion object {
         /**

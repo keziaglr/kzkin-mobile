@@ -31,6 +31,7 @@
             android:layout_marginTop="14dp"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="14dp"
+            android:scaleType="fitXY"
             android:contentDescription="@string/app_name"
             android:padding="5dp"
             android:src="@drawable/ic_home" />
@@ -40,7 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="14dp"
+            android:layout_marginStart="6dp"
             android:layout_marginTop="27dp"
             android:layout_toEndOf="@id/viewLikerImage"
             android:fontFamily="@font/poppins_bold"
@@ -54,8 +55,8 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentBottom="true"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="29dp"
-            android:layout_marginBottom="33dp"
+            android:layout_marginTop="27dp"
+            android:layout_marginBottom="35dp"
             android:layout_toEndOf="@id/viewLikerName"
             android:fontFamily="@font/poppins"
             android:text="@string/notif_desc" />
