@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
@@ -22,6 +23,13 @@ class ProductDetailAdminActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_product_detail_admin)
         id = intent.extras?.getString("id").toString()
+
+        var buttonBack = findViewById<ImageButton>(R.id.backProductDetailAdmin)
+        buttonBack!!.setOnClickListener {
+            var home = Intent(this, MainActivityAdmin::class.java)
+            startActivity(home)
+        }
+
         if (id != null ) {
             db.collection("products").document(id).get()
                 .addOnSuccessListener {document ->

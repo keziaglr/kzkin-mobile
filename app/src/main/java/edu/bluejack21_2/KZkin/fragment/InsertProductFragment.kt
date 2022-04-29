@@ -108,6 +108,8 @@ class InsertProductFragment : Fragment() {
                 db.collection("products").add(product)
                     .addOnSuccessListener { documentReference ->
                         Toast.makeText(requireContext(), getString(R.string.succ_submit), Toast.LENGTH_SHORT).show()
+                        var intent = Intent(context, MainActivityAdmin::class.java)
+                        startActivity(intent)
                     }
                     .addOnFailureListener { e ->
                         Log.w("hi", "Error adding document", e)

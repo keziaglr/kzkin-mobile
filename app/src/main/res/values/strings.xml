@@ -108,4 +108,5 @@
     <string name="large">Large</string>
     <string name="enable">Enable</string>
     <string name="old">years old</string>
+    <string name="activity">Activity</string>
 </resources>

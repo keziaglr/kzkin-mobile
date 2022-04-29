@@ -93,7 +93,7 @@ class UpdateProfileActivity : AppCompatActivity() {
                         val name = inputName.editText!!.text.toString()
                         val phoneNumber = inputPhoneNumber.editText!!.text.toString()
                         var skinType = inputSkinType.editText!!.text.toString()
-                        val gender = inputGender.editText!!.text.toString()
+                        var gender = inputGender.editText!!.text.toString()
 
                         if (userDOB == null || name.isEmpty() || phoneNumber.isEmpty() || skinType.isEmpty() || gender.isEmpty() || profileImage!!.isEmpty()) {
                             Toast.makeText(this, getString(R.string.err_field_empty), Toast.LENGTH_LONG)
@@ -137,9 +137,9 @@ class UpdateProfileActivity : AppCompatActivity() {
                                 }
 
                                 if(gender.equals("Perempuan")){
-                                    skinType = "Female"
+                                    gender = "Female"
                                 }else  if(gender.equals("Laki-laki")){
-                                    skinType = "Male"
+                                    gender = "Male"
                                 }
                                 val user = User(
                                     "",

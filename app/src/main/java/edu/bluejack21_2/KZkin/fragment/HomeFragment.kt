@@ -185,6 +185,7 @@ class HomeFragment : Fragment() {
             .addOnSuccessListener { result ->
                 hottestProductArrayList!!.clear()
                 for (document in result) {
+                    Log.e("DOCUMENTS", document.data.toString())
                     val product = document.toObject(Product::class.java)
                     hottestProductArrayList!!.add(product)
                 }
@@ -195,20 +196,20 @@ class HomeFragment : Fragment() {
     }
 
     private fun refreshPage() {
-        val swipeRefresh =
-            requireView().findViewById<SwipeRefreshLayout>(R.id.swipeToRefreshProduct)
-        swipeRefresh.setOnRefreshListener {
-            getALlProduct()
-            getHottestProducts()
-
-            productRV!!.adapter = productAdapter
-            productAdapter!!.notifyDataSetChanged()
-
-            hottestProductRV!!.adapter = productAdapter1
-            productAdapter1!!.notifyDataSetChanged()
-
-            swipeRefresh.isRefreshing = false
-        }
+//        val swipeRefresh =
+//            requireView().findViewById<SwipeRefreshLayout>(R.id.swipeToRefreshProduct)
+//        swipeRefresh.setOnRefreshListener {
+//            getALlProduct()
+//            getHottestProducts()
+//
+//            productRV!!.adapter = productAdapter
+//            productAdapter!!.notifyDataSetChanged()
+//
+//            hottestProductRV!!.adapter = productAdapter1
+//            productAdapter1!!.notifyDataSetChanged()
+//
+//            swipeRefresh.isRefreshing = false
+//        }
 
         productRV!!.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {

@@ -23,6 +23,7 @@ import edu.bluejack21_2.KZkin.model.Product
 import edu.bluejack21_2.KZkin.model.Review
 import edu.bluejack21_2.KZkin.model.User
 import android.text.format.DateFormat
+import edu.bluejack21_2.KZkin.fragment.HomeFragment
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -34,36 +35,16 @@ class ProductDetailUserActivity : AppCompatActivity(){
     private var reviewList: ArrayList<Review>? = null
     private var tempList: ArrayList<Review> = ArrayList()
     private var userList: ArrayList<User> = ArrayList()
+    private var buttonBack: ImageButton? = null
+    var rating: TextView? = null
     private var index = 5
     private var id = ""
     var linearLayoutManager : LinearLayoutManager? = null
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_product_detail_user)
 
+    override fun onResume() {
+        super.onResume()
+        Log.e("ON RESUME", "DIPANGGIL")
         id = intent.extras?.getString("id").toString()
-
-
-        reviewRV = findViewById<RecyclerView>(R.id.viewReviewRV)
-        reviewList = ArrayList<Review>()
-        reviewAdapter = ReviewAdapter(this)
-        linearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        reviewRV!!.setLayoutManager(linearLayoutManager)
-        getALlReview()
-        reviewRV!!.setAdapter(reviewAdapter)
-        reviewRV!!.adapter = reviewAdapter
-        reviewAdapter!!.notifyDataSetChanged()
-
-        refreshPage()
-
-        db.collection("users").get().addOnCompleteListener {
-            if(it.isSuccessful){
-                for (document in it.result){
-                    userList.add(document.toObject(User::class.java))
-                }
-            }
-        }
-
         if (id != null ) {
             db.collection("products").document(id).get()
                 .addOnSuccessListener {document ->
@@ -73,7 +54,7 @@ class ProductDetailUserActivity : AppCompatActivity(){
                     var brand = findViewById<TextView>(R.id.textProductDetailBrand)
                     var name = findViewById<TextView>(R.id.textProductDetailName)
                     var desc = findViewById<TextView>(R.id.textProductDetailDesc)
-                    var rating = findViewById<TextView>(R.id.viewProductDetailRating)
+                    rating = findViewById<TextView>(R.id.viewProductDetailRating)
 
                     val requestOption = RequestOptions()
                         .placeholder(R.drawable.ic_launcher_background)
@@ -86,10 +67,53 @@ class ProductDetailUserActivity : AppCompatActivity(){
                     brand.setText(product!!.brand)
                     name.setText(product!!.name)
                     desc.setText(product!!.description)
-                    rating.setText(String.format("%.1f", product.rating))
+                    rating?.setText(String.format("%.1f", product.rating))
                 }
 
         }
+    }
+
+    fun setRating( rate: Float){
+        rating!!.setText(rate.toString())
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_product_detail_user)
+
+
+        reviewList = ArrayList<Review>()
+        getALlReview()
+
+        reviewRV = findViewById<RecyclerView>(R.id.viewReviewRV)
+
+
+        reviewAdapter = ReviewAdapter(this)
+        linearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        reviewRV!!.setLayoutManager(linearLayoutManager)
+
+        reviewRV!!.setAdapter(reviewAdapter)
+        reviewRV!!.adapter = reviewAdapter
+        reviewAdapter!!.notifyDataSetChanged()
+
+        refreshPage()
+
+        buttonBack = findViewById<ImageButton>(R.id.backProductDetailUser)
+        buttonBack!!.setOnClickListener {
+            var home = Intent(this, MainActivityUser::class.java)
+            startActivity(home)
+        }
+
+        db.collection("users").get().addOnCompleteListener {
+            if(it.isSuccessful){
+                for (document in it.result){
+                    userList.add(document.toObject(User::class.java))
+                    Log.e("USER", document.data.toString())
+                }
+            }
+        }
+
+
 
         var btnInsertReview = findViewById<Button>(R.id.buttonInsertReview)
         db.collection("users").document(auth.currentUser!!.uid).get().addOnSuccessListener {
@@ -118,15 +142,15 @@ class ProductDetailUserActivity : AppCompatActivity(){
     }
 
     private fun refreshPage() {
-        val swipeRefresh = findViewById<SwipeRefreshLayout>(R.id.swipeToRefreshReview)
-        swipeRefresh.setOnRefreshListener {
-            getALlReview()
-
-            reviewRV!!.adapter = reviewAdapter
-            reviewAdapter!!.notifyDataSetChanged()
-
-            swipeRefresh.isRefreshing = false
-        }
+//        val swipeRefresh = findViewById<SwipeRefreshLayout>(R.id.swipeToRefreshReview)
+//        swipeRefresh.setOnRefreshListener {
+//            getALlReview()
+//
+//            reviewRV!!.adapter = reviewAdapter
+//            reviewAdapter!!.notifyDataSetChanged()
+//
+//            swipeRefresh.isRefreshing = false
+//        }
 
         reviewRV!!.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -164,11 +188,16 @@ class ProductDetailUserActivity : AppCompatActivity(){
     }
 
     private fun getALlReview(){
-        var temp : Query = db.collection("reviews").whereEqualTo("productId", id)
+        reviewList!!.clear()
+        Log.e("GET ALL REVIEW DIPQNGGIL", "AAA")
+        var fRating = intent.extras!!.getString("fRating")
+        var fSkin = intent.extras!!.getString("fSkin")
+        var fAge = intent.extras!!.getString("fAge")
+        var temp : Query = db.collection("reviews")//.whereEqualTo("productId", id)
 
-        if(intent.extras!!.getString("fRating") != null && intent.extras!!.getString("fRating")!!.isEmpty() == false){
-            temp = temp.whereEqualTo("rating", intent.extras!!.getString("fRating")!!.toFloat())
-        }
+//        if(fRating != null && fRating.isNotEmpty()){
+//            temp = temp.whereEqualTo("rating", intent.extras!!.getString("fRating")!!.toFloat())
+//        }
 
         if(intent.extras!!.getString("fLike") != null && intent.extras!!.getString("fLike") == "true"){
             Log.e("SORTT", "masuk")
@@ -177,58 +206,90 @@ class ProductDetailUserActivity : AppCompatActivity(){
 
         temp.get()
             .addOnSuccessListener { result ->
-                reviewList!!.clear()
 
-                for (document in result) {
-                    val review = document.toObject(Review::class.java)
-                    if(intent.extras!!.getString("fAge") != null && intent.extras!!.getString("fSkin") != null && intent.extras!!.getString("fAge")!!.isEmpty() == false && intent.extras!!.getString("fSkin")!!.isEmpty() == false) {
-                        Log.e("FB", "AGE SKIN")
-                        if (checkAge(review.userId!!) && checkSkin(review.userId!!)) {
-                            Log.e("ADD", "ADD BY AGE & SKIN" + review.id.toString())
-                            reviewList!!.add(review)
+                if(result.isEmpty){
+                    Log.e("RESULT", "EMPTY")
+                }
+                Log.e("MASUK", "ADD ON SUCCESS")
+                    for (document in result) {
+                        Log.e("DOCUMENTS", document.data.toString())
+                        val review = document.toObject(Review::class.java)
+
+                        if(fAge != null && fSkin != null && fAge.isNotEmpty() && fSkin.isNotEmpty() && fRating != null && fRating.isNotEmpty()) {
+                            Log.e("FB", "AGE SKIN RATING")
+                            if (checkAge(review.userId!!) && checkSkin(review.userId!!) && review.rating == fRating.toFloat()) {
+                                Log.e("ADD", "ADD BY AGE & SKIN" + review.id.toString())
+                                if(review.productId == id) reviewList!!.add(review)
+                            }
+                        }else if(fAge != null && fSkin != null && fAge.isNotEmpty() && fSkin.isNotEmpty()) {
+                            Log.e("FB", "AGE SKIN")
+                            if (checkAge(review.userId!!) && checkSkin(review.userId!!)) {
+                                Log.e("ADD", "ADD BY AGE & SKIN" + review.id.toString())
+                                if(review.productId == id) reviewList!!.add(review)
+                            }
+                        }else if(fAge != null && fAge.isNotEmpty() && fRating != null && fRating.isNotEmpty()) {
+                            Log.e("FB", "AGE RATING")
+                            if (checkAge(review.userId!!) && review.rating == fRating.toFloat()) {
+                                Log.e("ADD", "ADD BY AGE & SKIN" + review.id.toString())
+                                if(review.productId == id) reviewList!!.add(review)
+                            }
+                        }else if(fSkin != null && fSkin.isNotEmpty() && fRating != null && fRating.isNotEmpty()) {
+                            Log.e("FB", "SKIN RATING")
+                            if (checkSkin(review.userId!!) && review.rating == fRating.toFloat()) {
+                                Log.e("ADD", "ADD BY AGE & SKIN" + review.id.toString())
+                                if(review.productId == id) reviewList!!.add(review)
+                            }
                         }
-                    }else if(intent.extras!!.getString("fAge") != null && intent.extras!!.getString("fAge")!!.isEmpty() == false && intent.extras!!.getString("fAge") != ""){
-                        Log.e("FB", "AGE")
-                        var fAge = intent.extras!!.getString("fAge")
-                        Log.e("HAI2", "FAGE ${fAge}")
-                        if (checkAge(review.userId!!) == true) {
-                            Log.e("ADD", "ADD BY AGE" + review.id.toString())
-                            reviewList!!.add(review)
+                        else if(fAge != null && fAge.isNotEmpty() && fAge != ""){
+                            Log.e("FB", "AGE")
+                            var fAge = intent.extras!!.getString("fAge")
+                            Log.e("HAI2", "FAGE ${fAge}")
+                            if (checkAge(review.userId!!) == true) {
+                                Log.e("ADD", "ADD BY AGE" + review.id.toString())
+                                if(review.productId == id) reviewList!!.add(review)
+                            }
+                        }else if(fSkin != null && fSkin.isNotEmpty()){
+                            Log.e("FB", "SKIN")
+                            if (checkSkin(review.userId!!)) {
+                                Log.e("ADD", "ADD BY SKIN" + review.id.toString())
+                                if(review.productId == id) reviewList!!.add(review)
+                            }
+                        }else if(fRating != null && fRating.isNotEmpty()){
+                            Log.e("FB", "RATING")
+                            if (review.rating == fRating.toFloat()) {
+                                Log.e("ADD", "ADD BY SKIN" + review.id.toString())
+                                if(review.productId == id) reviewList!!.add(review)
+                            }
                         }
-                    }else if(intent.extras!!.getString("fSkin") != null && intent.extras!!.getString("fSkin")!!.isEmpty() == false){
-                        Log.e("FB", "SKIN")
-                        if (checkSkin(review.userId!!)) {
-                            Log.e("ADD", "ADD BY SKIN" + review.id.toString())
-                            reviewList!!.add(review)
+                        else{
+                            Log.e("FB", "ELSEE")
+                            Log.e("ADD", "ADD BY ELSE" + review.id.toString())
+                            if(review.productId == id) reviewList!!.add(review)
+                        }
+                    }
+                    Log.e("Review Adapter dipanbgggil", "this")
+                    if(reviewList!!.isEmpty() == false){
+                        for(review in reviewList!!){
+                            Log.e("Review List3", review.id.toString())
+                        }
+                    }
+                    if(reviewList!!.size >= 5){
+                        for (i in tempList!!.size until index){
+                            Log.e("Review List1", reviewList!!.get(i).id.toString())
+                            tempList.add(reviewList!!.get(i))
+
                         }
                     }else{
-                        Log.e("FB", "ELSEE")
-                        Log.e("ADD", "ADD BY ELSE" + review.id.toString())
-                        reviewList!!.add(review)
+                        for(review in reviewList!!){
+                            Log.e("Review List2", review.id.toString())
+                            tempList.add(review)
+                        }
                     }
-                }
-                Log.e("Review Adapter dipanbgggil", "this")
-                if(reviewList!!.isEmpty() == false){
-                    for(review in reviewList!!){
-                        Log.e("Review List3", review.id.toString())
-                    }
-                }
-                if(reviewList!!.size >= 5){
-                    for (i in tempList!!.size until index){
-                        Log.e("Review List1", reviewList!!.get(i).id.toString())
-                        tempList.add(reviewList!!.get(i))
-                    }
-                }else{
-                    for(review in reviewList!!){
-                        Log.e("Review List2", review.id.toString())
-                        tempList.add(review)
-                    }
-                }
 
-                Handler().postDelayed({
-                    reviewAdapter!!.submitList(tempList!!)
-                }, 8000)
-            }
+                    Handler().postDelayed({
+                        reviewAdapter!!.submitList(tempList!!)
+                    }, 7000)
+                }
             .addOnFailureListener { exception ->
                 Log.d("hi", "Error getting documents: ", exception) }
     }

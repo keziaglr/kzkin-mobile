@@ -37,7 +37,9 @@ class ProductAdapter(private val Context: Any) : RecyclerView.Adapter<RecyclerVi
         fun binding(product: Product){
             productName?.setText(product.name)
             productBrand?.setText(product.brand)
-            productRating?.setText(String.format("%.1f", product.rating))
+            var nol = 0
+            if(product.reviews == nol.toLong()) productRating?.setText("-")
+            else productRating?.setText(String.format("%.1f", product.rating))
             val requestOption = RequestOptions()
                 .placeholder(R.drawable.ic_launcher_background)
                 .error(R.drawable.ic_launcher_background)

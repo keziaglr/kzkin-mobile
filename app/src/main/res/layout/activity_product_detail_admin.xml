@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/swipeToRefreshReview"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintHorizontal_bias="1.0"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintVertical_bias="1.0">
-    <ScrollView
+<!--<androidx.swiperefreshlayout.widget.SwipeRefreshLayout -->
+<!--    android:id="@+id/swipeToRefreshReview"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="wrap_content"-->
+<!--    app:layout_constraintBottom_toBottomOf="parent"-->
+<!--    app:layout_constraintEnd_toEndOf="parent"-->
+<!--    app:layout_constraintHorizontal_bias="1.0"-->
+<!--    app:layout_constraintStart_toStartOf="parent"-->
+<!--    app:layout_constraintTop_toTopOf="parent"-->
+<!--    app:layout_constraintVertical_bias="1.0">-->
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:fillViewport="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -23,14 +23,24 @@
             android:background="#F8EDEB"
             tools:context=".activity.ProductDetailAdminActivity">
 
+            <ImageButton
+                android:id="@+id/backProductDetailAdmin"
+                android:layout_width="32dp"
+                android:layout_height="44dp"
+                android:layout_marginTop="16dp"
+                android:backgroundTint="@color/base_pink"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_back" />
+
             <ImageView
                 android:id="@+id/imgProductDetail2"
-                android:layout_width="334dp"
-                android:layout_height="334dp"
+                android:layout_width="300dp"
+                android:layout_height="300dp"
                 android:layout_marginTop="4dp"
                 android:scaleType="fitXY"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.493"
+                app:layout_constraintHorizontal_bias="0.495"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:src="@tools:sample/avatars" />
@@ -54,8 +64,8 @@
                 android:id="@+id/viewProductDetailRating2"
                 android:layout_width="63dp"
                 android:layout_height="27dp"
-                android:layout_marginStart="164dp"
                 android:layout_marginTop="16dp"
+                android:layout_marginEnd="36dp"
                 android:drawablePadding="1dp"
                 android:fontFamily="@font/poppins"
                 android:text="5"
@@ -63,8 +73,6 @@
                 android:textSize="14sp"
                 app:drawableStartCompat="@drawable/ic_star"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/textProductDetailBrand2"
                 app:layout_constraintTop_toBottomOf="@+id/imgProductDetail2" />
 
             <TextView
@@ -114,4 +122,4 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
-</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+<!--</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>-->

@@ -61,6 +61,7 @@ class ProfileInformationFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        var label = view.findViewById<TextView>(R.id.labelUserName)
         var name = view.findViewById<TextView>(R.id.viewUserName)
         var email = view.findViewById<TextView>(R.id.viewUserEmail)
         var phone = view.findViewById<TextView>(R.id.viewUserPhoneNumber)
@@ -71,6 +72,7 @@ class ProfileInformationFragment : Fragment() {
         var btnUpdate = view.findViewById<Button>(R.id.buttonUpdateProfile)
         var btnLogout = view.findViewById<Button>(R.id.buttonLogout)
 
+        var lbl = label.text
         btnUpdate.setOnClickListener {
             var intent = Intent(context, UpdateProfileActivity::class.java)
             startActivity(intent)
@@ -99,9 +101,41 @@ class ProfileInformationFragment : Fragment() {
                 if(user.phoneNumber == null) phone.setText("-")
                 else phone.setText(user.phoneNumber)
                 if(user.gender == "") gender.setText("-")
-                else gender.setText(user.gender)
+                else {
+                    var gender2 = ""
+                    if(lbl.equals("Nama")){
+                        if(user!!.gender.equals("Female")){
+                            gender2 = "Perempuan"
+                        }else if(user!!.gender.equals("Male")){
+                            gender2 = "Laki-laki"
+                        }
+                    }
+                    else{
+                        gender2 = user!!.gender.toString()
+                    }
+                    gender.setText(gender2.toString())
+                }
                 if(user.skinType == "") skintype.setText("-")
-                else skintype.setText(user.skinType)
+                else {
+                    var skin = ""
+                    Log.e("LABEL", lbl.equals("Nama").toString())
+                    if(lbl.equals("Nama")){
+                        if(user!!.skinType.equals("Oily Skin")){
+                            skin = "Kulit Berminyak"
+                        }else if(user!!.skinType.equals("Combination Skin")){
+                            skin = "Kulit Kombinasi"
+                        }else if(user!!.skinType.equals("Dry Skin")){
+                            skin = "Kulit Kering"
+                        }else if(user!!.skinType.equals("Normal Skin")){
+                            skin = "Kulit Normal"
+                        }
+                    }
+                    else{
+                        skin = user!!.skinType.toString()
+                    }
+                    Log.e("SKIN", skin)
+                    skintype.setText(skin)
+                }
                 if(user.dob != null){
                     var dob1 = DateFormat.format("dd MMMM yyyy", user.dob).toString()
                     dob.setText(dob1)

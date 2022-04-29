@@ -13,7 +13,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -22,6 +25,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import edu.bluejack21_2.KZkin.R
+import edu.bluejack21_2.KZkin.activity.ProductDetailUserActivity
 import edu.bluejack21_2.KZkin.activity.UpdateReviewActivity
 import edu.bluejack21_2.KZkin.model.Like
 import edu.bluejack21_2.KZkin.model.Product
@@ -30,7 +34,7 @@ import edu.bluejack21_2.KZkin.model.User
 import java.util.*
 
 
-class ReviewAdapter (private val Contextt: Any) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ReviewAdapter (private val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var reviewList: ArrayList<Review>? = ArrayList()
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ReviewViewHolder {
         return ReviewViewHolder(LayoutInflater.from(viewGroup.context).inflate(R.layout.review_layout, viewGroup, false))
@@ -139,6 +143,7 @@ class ReviewAdapter (private val Contextt: Any) : RecyclerView.Adapter<RecyclerV
         notifyDataSetChanged()
     }
 
+
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val newList = reviewList?.get(position)
         val db = Firebase.firestore
@@ -159,50 +164,66 @@ class ReviewAdapter (private val Contextt: Any) : RecyclerView.Adapter<RecyclerV
                             intent.putExtra("id", reviewList!!.get(position).id)
                             it.context.startActivities(arrayOf(intent))
                         }
-                        holder.deleteBtn.setOnClickListener{
+                        holder.deleteBtn.setOnClickListener{ view->
 
                             reviewList!!.get(position).id?.let { it1 ->
                                 db.collection("reviews").document(
                                     it1
-                                ).delete()
+                                ).delete().addOnSuccessListener { aa->
+                                    var product: Product? = null
+                                    var pReview: Long? = null
+                                    var pRating: Float? = null
+                                    var count: Float = 0.0f
+                                    var sum: Float? = 0.0f
+                                    var productId = reviewList!!.get(position).productId
+                                    Log.e("YESYY", "MASUK")
+                                    db.collection("reviews").whereEqualTo("productId", productId).get().addOnCompleteListener { task ->
+                                        if (task.isSuccessful) {
+                                            Log.e("TASK", "masuk task")
+                                            for (document in task.result) {
+                                                var review = document.toObject(Review::class.java)
+                                                sum = sum?.plus(review.rating)
+                                                Log.e("SUM", "${sum} ${count}")
+                                                count++
+                                            }
+                                            Log.e("FINAL SUM", "${sum} ${count}")
 
-                                var product: Product? = null
-                                var pReview: Long? = null
-                                var pRating: Float? = null
-                                var count: Int = 0
-                                var sum: Float? = 0.0f
-                                var productId = reviewList!!.get(position).productId
-                                db.collection("reviews").whereEqualTo("productId", productId).get().addOnCompleteListener { task ->
-                                    if (task.isSuccessful) {
-                                        for (document in task.result) {
-                                            var review = document.toObject(Review::class.java)
-                                            sum = sum?.plus(review.rating)
-                                            count++
-                                        }
+                                            if (productId != null) {
+                                                db.collection("products").document(productId).get().addOnSuccessListener {
+                                                    if(it != null){
+                                                        val newRating = sum!!.toFloat()?.div(count.toFloat())
+                                                        product = it.toObject(Product::class.java)
+                                                        pReview = count.toLong()
 
-                                        if (productId != null) {
-                                            db.collection("products").document(productId).get().addOnSuccessListener {
-                                                if(it != null){
-                                                    val newRating = sum?.div(count.toFloat())
-                                                    product = it.toObject(Product::class.java)
-                                                    pReview = product!!.reviews
-                                                    pRating = product!!.rating
-                                                    pReview = count.toLong()
-                                                    pRating = newRating
-                                                    var uProduct= Product("", product!!.name, product!!.brand, product!!.category, product!!.description,
-                                                        product!!.image, pRating, pReview, product!!.createdAt, Timestamp.now())
+                                                        if(count == 0.0f){
+                                                            pRating = 0.0f
+                                                        }else{
+                                                            pRating = newRating
+                                                        }
+                                                        var uProduct= Product("", product!!.name, product!!.brand, product!!.category, product!!.description,
+                                                            product!!.image, pRating, pReview, product!!.createdAt, Timestamp.now())
 
-                                                    if(uProduct != null){
-                                                        db.collection("products").document(productId).set(uProduct!!)
+                                                        if(uProduct != null){
+                                                            Log.e("SET PRODUCT", "${pReview} ${pRating}")
+
+                                                            db.collection("products").document(productId).set(uProduct!!)
+                                                            if(context is ProductDetailUserActivity){
+                                                                var ctx = context as ProductDetailUserActivity
+                                                                ctx.setRating(pRating!!.toFloat())
+                                                            }
+                                                        }
+
                                                     }
-
                                                 }
                                             }
                                         }
                                     }
+                                    Toast.makeText(view.context, R.string.succ_delete, Toast.LENGTH_SHORT).show()
+                                    reviewList!!.removeAt(position)
+                                    notifyItemRemoved(position);
+                                    notifyItemRangeChanged(position, reviewList!!.size);
                                 }
-                                Toast.makeText(it.context, R.string.succ_delete, Toast.LENGTH_SHORT).show()
-                                notifyDataSetChanged()
+
                             }
                         }
 

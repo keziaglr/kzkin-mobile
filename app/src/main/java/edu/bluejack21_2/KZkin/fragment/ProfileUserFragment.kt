@@ -44,7 +44,7 @@ class ProfileUserFragment : Fragment() {
     fun setTab(view: View){
         val adapter = ViewPagerAdapter(childFragmentManager)
         adapter.addFragment(ProfileInformationFragment() , getString(R.string.tab_profile))
-        adapter.addFragment(SettingFragment() , getString(R.string.tab_setting))
+        adapter.addFragment(SettingFragment() , getString(R.string.activity))
         val viewPager = view.findViewById<ViewPager>(R.id.viewPager)
         viewPager.adapter = adapter
         val tabs = view.findViewById<TabLayout>(R.id.tabs)
